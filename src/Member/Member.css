@@ -1,0 +1,106 @@
+input:focus {outline: none;}
+
+.mainBackground {
+  background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.main-form {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 60px 100px 50px 60px;
+  border-radius: 4px;
+  width: 330px;
+}
+
+.main-form h2 {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.main-form input {
+  width: 100%;
+  height: 23px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #333;
+  padding: 16px 20px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.main-form input::placeholder {
+  color: #8c8c8c;
+}
+
+.danger {
+  width: 368px;
+  height: 50px;
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.danger:hover {
+  background-color: rgb(150, 7, 15);
+}
+
+.main-form h1 {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.modify {
+  width: 368px;
+  height: 50px;
+  background-color: #45a842;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modify:hover {
+  background-color: rgb(12, 80, 27);
+}
+
+
+.kakao img {
+  margin-top: 10px;
+  width: 368px;
+  height: auto;
+  cursor: pointer;
+}
+
+.signUpBtn {
+  width: 100%;
+  margin-left: 300px;
+  margin-top: 10px;
+}
