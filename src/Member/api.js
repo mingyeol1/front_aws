@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://dev.tft.p-e.kr',
+  baseURL: 'https://dev.tft.p-e.kr',
 });
 
 export const setAuthToken = token => {

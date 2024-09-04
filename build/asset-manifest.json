@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "https://www.tft.p-e.kr/static/css/main.5573ea3a.css",
-    "main.js": "https://www.tft.p-e.kr/static/js/main.af9a4df7.js",
+    "main.js": "https://www.tft.p-e.kr/static/js/main.41a9773d.js",
     "static/js/453.80efc53e.chunk.js": "https://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js",
     "index.html": "https://www.tft.p-e.kr/index.html",
     "main.5573ea3a.css.map": "https://www.tft.p-e.kr/static/css/main.5573ea3a.css.map",
-    "main.af9a4df7.js.map": "https://www.tft.p-e.kr/static/js/main.af9a4df7.js.map",
+    "main.41a9773d.js.map": "https://www.tft.p-e.kr/static/js/main.41a9773d.js.map",
     "453.80efc53e.chunk.js.map": "https://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5573ea3a.css",
-    "static/js/main.af9a4df7.js"
+    "static/js/main.41a9773d.js"
   ]
 }
