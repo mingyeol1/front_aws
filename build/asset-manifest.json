@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/css/main.5573ea3a.css",
-    "main.js": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/js/main.50ad138d.js",
-    "static/js/453.80efc53e.chunk.js": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/js/453.80efc53e.chunk.js",
-    "index.html": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/index.html",
-    "main.5573ea3a.css.map": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/css/main.5573ea3a.css.map",
-    "main.50ad138d.js.map": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/js/main.50ad138d.js.map",
-    "453.80efc53e.chunk.js.map": "http://tft-front.ap-northeast-2.elasticbeanstalk.com/static/js/453.80efc53e.chunk.js.map"
+    "main.css": "http://www.tft.p-e.kr/static/css/main.5573ea3a.css",
+    "main.js": "http://www.tft.p-e.kr/static/js/main.7b88ee8c.js",
+    "static/js/453.80efc53e.chunk.js": "http://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js",
+    "index.html": "http://www.tft.p-e.kr/index.html",
+    "main.5573ea3a.css.map": "http://www.tft.p-e.kr/static/css/main.5573ea3a.css.map",
+    "main.7b88ee8c.js.map": "http://www.tft.p-e.kr/static/js/main.7b88ee8c.js.map",
+    "453.80efc53e.chunk.js.map": "http://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5573ea3a.css",
-    "static/js/main.50ad138d.js"
+    "static/js/main.7b88ee8c.js"
   ]
 }
