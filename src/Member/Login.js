@@ -51,7 +51,7 @@ function Login() {
     <div className="mainBackground">
       <div className="main-container">
         <form className="main-form" onSubmit={handleLogin}>
-          <h2>로그인</h2>
+          <h2>로그인ㅋ</h2>
           <input name="mid" value={loginData.mid} onChange={handleLoginChange} placeholder="아이디" />
           <input name="mpw" type="password" value={loginData.mpw} onChange={handleLoginChange} placeholder="비밀번호" />
           <button type="submit" className='danger'>로그인</button>
