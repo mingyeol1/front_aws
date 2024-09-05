@@ -15,7 +15,7 @@ function Login() {
 
 
 
-  //타이핑 할 때마다 loginData상태 업데이트.
+  //타이핑 할 때마다 loginData상태 업데이트.....
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
