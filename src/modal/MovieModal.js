@@ -7,7 +7,7 @@ import useReviews from './useReviews';
 import useTrailer from './useTrailer';
 import ContentSection from './ContentSection';
 import TitleSection from './TitleSection';
-import api from '../Member/api';
+import api from './api';
 import ReviewSection from './ReviewSection';
 
 const scrollbarStyle = css`

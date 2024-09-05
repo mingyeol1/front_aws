@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaTimes, FaSearch } from 'react-icons/fa';
-import api, { setAuthToken } from '../../Member/api';
+import api, { setAuthToken } from './api';
 import { useCookies } from 'react-cookie';
 import MeetCreate from './MeetCreate';
 import MeetApply from './MeetApply';
