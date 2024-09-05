@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
-import api from './api';
+import api from '../../Member/api';
 
 const ModalOverlay = styled.div`
   position: fixed;
