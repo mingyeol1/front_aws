@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from './api';
+import api from '../../Member/api';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
