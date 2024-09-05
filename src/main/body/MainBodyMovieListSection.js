@@ -98,7 +98,6 @@ function MainBodyMovieListSection() {
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
     }, (data) => {
-      console.log('현재 상영작', data);
       setRow1(data);
     });
   
@@ -109,7 +108,6 @@ function MainBodyMovieListSection() {
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
     }, (data) => {
-      console.log('개봉 예정작', data);
       setRow2(data);
     });
   
@@ -120,7 +118,6 @@ function MainBodyMovieListSection() {
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
     }, (data) => {
-      console.log('인기영화', data);
       setRow3(data);
     });
   
@@ -131,7 +128,6 @@ function MainBodyMovieListSection() {
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
     }, (data) => {
-      console.log('최고평점', data);
       setRow4(data);
     });
   }, []);

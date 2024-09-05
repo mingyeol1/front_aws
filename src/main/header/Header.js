@@ -112,7 +112,6 @@ function Header({ toggleSidebar }) {
   };
 
   useEffect(() => {
-    console.log("쿠키 확인:", cookies.accessToken);
     if (cookies.accessToken) {
       setIsAuthenticated(true);
     } else {
