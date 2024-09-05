@@ -55,7 +55,7 @@ const NoPosterImage = styled.img`
 const baseImageUrl = 'https://image.tmdb.org/t/p/w500';
 
 // API Key
-const API_KEY = REACT_APP_TMDB_API_KEY;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
 // Access Token Auth
 const cookies = new Cookies();

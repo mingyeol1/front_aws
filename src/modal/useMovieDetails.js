@@ -14,7 +14,7 @@ const useMovieDetails = (movieId) => {
       setIsLoading(true);
       setError(null);
       try {
-        const apiKey = REACT_APP_TMDB_API_KEY;
+        const apiKey = process.env.REACT_APP_TMDB_API_KEY;
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,videos`
         );

@@ -177,7 +177,7 @@ const MovieModal = ({ movie, onClose, onGenreClick, onKeywordClick, clearSearchV
   useEffect(() => {
     const fetchKeywords = async () => {
       try {
-        const API_KEY = REACT_APP_TMDB_API_KEY;
+        const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const response = await api.get(`https://api.themoviedb.org/3/movie/${movie.id}/keywords`,{
           params: {
             api_key: `${API_KEY}`,
