@@ -4,7 +4,6 @@ import api from '../Member/api';
 
 const cookies = new Cookies();
 
-console.log('token', cookies.get("accessToken"));
 
 const useReviews = (movie_id, movie_title) => {
   const [rating, setRating] = useState(0);

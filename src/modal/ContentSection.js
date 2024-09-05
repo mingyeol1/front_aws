@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FaPlay } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import api from '../Member/api';
 import axios from 'axios';
 
-console.log('API KEY:', process.env.REACT_APP_TMDB_API_KEY);
 
 const scrollbarStyle = css`
   &::-webkit-scrollbar {

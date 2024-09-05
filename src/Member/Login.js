@@ -44,7 +44,7 @@ function Login() {
 
   const handleKakaoLogin = () => {
     // 카카오 로그인 페이지로 리디렉션
-    window.location.href = "http://localhost:8090/oauth2/authorization/kakao";
+    window.location.href = "https://dev.tft.p-e.kr/oauth2/authorization/kakao";
   };
 
   return (
