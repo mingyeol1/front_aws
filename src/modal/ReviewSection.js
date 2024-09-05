@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { FaStar, FaEdit, FaTrash } from 'react-icons/fa';
 import { Cookies } from 'react-cookie';
 import styled, { css, keyframes } from 'styled-components';
-import api from '../Member/api';
+import api from './api';
 
 const cookies = new Cookies();
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Cookies } from 'react-cookie';
-import api from '../Member/api';
+import api from './api';
 
 const cookies = new Cookies();
 
