@@ -79,7 +79,7 @@ const LoadingEndMessage = styled.div`  // p를 div로 변경
 const baseImageUrl = 'https://image.tmdb.org/t/p/w500';
 
 // 환경 변수를 통한 API 키
-const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+const API_KEY = REACT_APP_TMDB_API_KEY;
 
 function SearchResultList({ clearSearchValue }) {
   const [selectedMovie, setSelectedMovie] = useState(null);

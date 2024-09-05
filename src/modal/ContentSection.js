@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../Member/api';
 import axios from 'axios';
 
-console.log('API KEY:', process.env.REACT_APP_TMDB_API_KEY);
+console.log('API KEY:', REACT_APP_TMDB_API_KEY);
 
 const scrollbarStyle = css`
   &::-webkit-scrollbar {
@@ -173,7 +173,7 @@ const ContentSection = ({
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const API_KEY = process.env.REACT_APP_TMDB_API_KEY; // API 키를 환경 변수로 관리하는 것이 좋습니다
+  const API_KEY = REACT_APP_TMDB_API_KEY; // API 키를 환경 변수로 관리하는 것이 좋습니다
 
   const truncateOverview = (text, maxLength) => {
     if (text.length <= maxLength) return text;
@@ -183,7 +183,7 @@ const ContentSection = ({
   useEffect(() => {
     const fetchKeywords = async () => {
       try {
-        const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const API_KEY = REACT_APP_TMDB_API_KEY;
         console.log('Fetching keywords for movie ID:', movie.id);
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/keywords`, {
           params: {

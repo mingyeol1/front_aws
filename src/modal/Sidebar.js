@@ -129,7 +129,7 @@ const Sidebar = ({ isOpen, onClose, clearSearchValue }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   
-  const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+  const API_KEY = REACT_APP_TMDB_API_KEY;
   const api = axios.create({
     baseURL: 'https://api.themoviedb.org/3',
     headers: {
