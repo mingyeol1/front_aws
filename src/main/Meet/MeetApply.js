@@ -334,12 +334,12 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}><FaTimes /></CloseButton>
         <ImageSection>
-          {meeting.imageUrls && meeting.imageUrls.length > 0 && (
-            meeting.imageUrls.map((url, index) => (
+          {meeting.meetBoardImages && meeting.meetBoardImages.length > 0 && (
+            meeting.meetBoardImages.map((image) => (
               <MeetImage
-                key={index}
-                src={url}  // S3 URL을 직접 사용
-                alt={`미팅 이미지 ${index + 1}`}
+                key={image.uuid}
+                src={`/view/${image.uuid}_${image.fileName}`}
+                alt={image.fileName}
               />
             ))
           )}
