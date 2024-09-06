@@ -13,14 +13,9 @@ function Login() {
   const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 컴포넌트 마운트 시 쿠키에서 토큰을 확인하고 설정
-    const token = cookies.accessToken;
-    if (token) {
-      setAuthToken(token);
-    }
-  }, [cookies.accessToken]);
 
+
+  //타이핑 할 때마다 loginData상태 업데이트.....
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
@@ -37,8 +32,7 @@ function Login() {
       setCookie('accessToken', accessToken, { path: '/', sameSite: 'Lax' });
       setCookie('refreshToken', refreshToken, { path: '/', sameSite: 'Lax' });
 
-      // 토큰을 API 인스턴스에 설정
-      setAuthToken(accessToken);
+
 
       navigate('/');
       alert("로그인에 성공하셨습니다.");
@@ -49,6 +43,7 @@ function Login() {
   };
 
   const handleKakaoLogin = () => {
+    // 카카오 로그인 페이지로 리디렉션
     window.location.href = "https://dev.tft.p-e.kr/oauth2/authorization/kakao";
   };
 
