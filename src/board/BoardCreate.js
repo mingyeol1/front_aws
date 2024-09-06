@@ -2,6 +2,7 @@ import { useHistory, useNavigate } from "react-router-dom";
 import api, { setAuthToken } from "../Member/api";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import "./BoardCreate.css";
 
 function BoardCreate() {
   const [cookies] = useCookies(['accessToken']);
@@ -46,24 +47,26 @@ function BoardCreate() {
   }, []);
 
   return (
-    <div className="board-read">
-      <div className="board-content">
-        <div className="board-header">
-          <span className="board-category">자유게시판</span>
-          <form className="board-header" onSubmit={handleCreateBoard}>
-            <div>
-              <span className="author" name='writer'
-                style={{ position: "absolute", right: "0", marginRight: "100px" }}>작성자 : {memberData}</span>
-            </div>
-            <input className="board-title" name='title' value={createBoard.title} onChange={handleCreateBoardChange} placeholder="제목" />
-            <div className="board-body">
-              <textarea className="author" name="content" value={createBoard.content} onChange={handleCreateBoardChange} placeholder="내용" />
-            </div>
-            <button type="submit">완료</button>
-          </form>
+    <>
+      <div className="board-create-read">
+        <div className="board-create-content">
+          <div className="board-create-header">
+            <span className="board-create-category">자유게시판</span>
+            <form className="board-create-header" onSubmit={handleCreateBoard}>
+              <div>
+                <span className="author" name='writer'
+                  style={{ position: "absolute", right: "0", marginRight: "100px" }}>작성자 : {memberData}</span>
+              </div>
+              <input className="board-create-title" name='title' value={createBoard.title} onChange={handleCreateBoardChange} placeholder="제목" />
+              <div className="board-create-body">
+                <textarea className="author" name="content" value={createBoard.content} onChange={handleCreateBoardChange} placeholder="내용" />
+              </div>
+              <button type="submit">완료</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

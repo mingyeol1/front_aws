@@ -76,6 +76,55 @@
   color: #ff4444;
 }
 
+/* 네이버 댓글 입력창 UI 모방*/
+.comment-form {
+  background-color: #3f3f3f;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+  box-sizing: border-box; /* textarea범위 설정을 위해 추가 */
+}
+
+.comment-input-area {
+  margin-bottom: 10px;
+}
+
+.comment-input-area textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 10px;
+  resize: none; /* textarea 크기 조절 : 불가능하게 */
+  box-sizing: border-box; /* textarea범위 설정을 위해 추가 */
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-author {
+  font-size: 14px;
+  color: white;
+}
+
+.comment-submit-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.comment-submit-btn:hover {
+  background-color: #e50914;
+}
+
 /* pagination */
 .pagination {
   display: flex;
