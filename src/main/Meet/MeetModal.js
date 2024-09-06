@@ -108,7 +108,7 @@ const MeetItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 300px;
+  height: 300px; 
 `;
 
 const MeetInfo = styled.div`
@@ -118,8 +118,8 @@ const MeetInfo = styled.div`
 
 const MeetImage = styled.img`
   width: 100%;
-  height: 150px;
-  object-fit: cover;
+  height: 150px; 
+  object-fit: cover; 
   border-radius: 10px;
   margin-bottom: 10px;
 `;
@@ -233,10 +233,10 @@ const MeetModal = ({ onClose }) => {
           <MeetingsGrid>
             {filteredMeetings.map(meeting => (
               <MeetItem key={meeting.meetId}>
-                {meeting.imageUrls && meeting.imageUrls.length > 0 && (
+                {meeting.meetBoardImages && meeting.meetBoardImages.length > 0 && (
                   <MeetImage
-                    src={meeting.imageUrls[0]}  // S3에서 불러온 첫 번째 이미지 사용
-                    alt="미팅 이미지"
+                    src={`/view/${meeting.meetBoardImages[0].uuid}_${meeting.meetBoardImages[0].fileName}`}
+                    alt={meeting.meetBoardImages[0].fileName}
                   />
                 )}
                 <MeetInfo>
