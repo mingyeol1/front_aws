@@ -127,7 +127,7 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
     meetContent: '',
     personnel: '',
     meetTime: '',
-    fileNames: [] // 서버에 업로드된 이미지 파일명을 저장
+    fileNames: [] // S3 URL을 포함한 파일 정보를 저장
   });
 
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -151,8 +151,7 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
           });
 
           if (data.fileNames) {
-            const previews = data.fileNames.map(fileName => `/view/${fileName}`);
-            setImagePreviews(previews);
+            setImagePreviews(data.fileNames.map(file => file.s3Url));
           }
         })
         .catch(error => console.error("게시글 데이터를 가져오는데 실패했습니다.", error));
@@ -161,10 +160,10 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [name]: value
-    });
+    }));
   };
 
   const handleFileChange = async (e) => {
@@ -176,25 +175,27 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
     });
 
     try {
-      const result = await uploadToServer(formObj, authToken);
-      const newFileNames = result.map(item => item.uuid + "_" + item.fileName);
+      const result = await uploadToServer(formObj);
+      const newFileData = result.map(item => ({
+        fileName: item.uuid + "_" + item.fileName,
+        s3Url: item.s3Url
+      }));
 
       setFormData(prev => ({
         ...prev,
-        fileNames: [...prev.fileNames, ...newFileNames]
+        fileNames: [...prev.fileNames, ...newFileData]
       }));
 
-      const newPreviews = newFileNames.map(fileName => `/view/${fileName}`);
-      setImagePreviews(prev => [...prev, ...newPreviews]);
+      setImagePreviews(prev => [...prev, ...newFileData.map(file => file.s3Url)]);
     } catch (error) {
       console.error("File upload failed", error);
     }
   };
 
   const handleRemoveImage = async (index) => {
-    const fileNameToRemove = formData.fileNames[index];
+    const fileToRemove = formData.fileNames[index];
     try {
-      await removeFileToServer(fileNameToRemove, authToken);
+      await removeFileToServer(fileToRemove.fileName);
       const newFileNames = [...formData.fileNames];
       const newImagePreviews = [...imagePreviews];
       newFileNames.splice(index, 1);
@@ -213,6 +214,7 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
   const handleSubmit = async () => {
     const data = {
       ...formData,
+      fileNames: formData.fileNames.map(file => file.fileName) // 서버에 파일명만 전송
     };
 
     const url = editMode ? `/api/meet/modify/${meetNum}` : '/api/meet/register';
@@ -231,22 +233,17 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
     }
   };
 
-  const uploadToServer = async (formObj, token) => {
+  const uploadToServer = async (formObj) => {
     const response = await api.post('/upload', formObj, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'multipart/form-data'
       },
     });
     return response.data;
   };
 
-  const removeFileToServer = async (fileName, token) => {
-    const response = await api.delete(`/remove/${fileName}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-    });
+  const removeFileToServer = async (fileName) => {
+    const response = await api.delete(`/remove/${fileName}`);
     return response.data;
   };
 

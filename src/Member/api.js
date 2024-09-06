@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 환경 변수에서 baseURL 값을 가져옴
 const api = axios.create({
-  baseURL: 'https://dev.tft.p-e.kr'
+  baseURL: 'http://localhost:8080'
 });
 
 export const setAuthToken = token => {
