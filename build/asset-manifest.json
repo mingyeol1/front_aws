@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://www.tft.p-e.kr/static/css/main.edabf647.css",
-    "main.js": "https://www.tft.p-e.kr/static/js/main.d79dd572.js",
-    "static/js/453.80efc53e.chunk.js": "https://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js",
-    "index.html": "https://www.tft.p-e.kr/index.html",
-    "main.edabf647.css.map": "https://www.tft.p-e.kr/static/css/main.edabf647.css.map",
-    "main.d79dd572.js.map": "https://www.tft.p-e.kr/static/js/main.d79dd572.js.map",
-    "453.80efc53e.chunk.js.map": "https://www.tft.p-e.kr/static/js/453.80efc53e.chunk.js.map"
+    "main.css": "http://localhost:3000/static/css/main.edabf647.css",
+    "main.js": "http://localhost:3000/static/js/main.3762703e.js",
+    "static/js/453.80efc53e.chunk.js": "http://localhost:3000/static/js/453.80efc53e.chunk.js",
+    "index.html": "http://localhost:3000/index.html",
+    "main.edabf647.css.map": "http://localhost:3000/static/css/main.edabf647.css.map",
+    "main.3762703e.js.map": "http://localhost:3000/static/js/main.3762703e.js.map",
+    "453.80efc53e.chunk.js.map": "http://localhost:3000/static/js/453.80efc53e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.edabf647.css",
-    "static/js/main.d79dd572.js"
+    "static/js/main.3762703e.js"
   ]
 }
