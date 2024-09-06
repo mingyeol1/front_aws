@@ -6,7 +6,7 @@ function Test(){
     const [hello, setHello] = useState('');
 
     useEffect(() => {
-      axios.get('http://localhost:8090/api/test')
+      axios.get('http://localhost:8080/api/test')
           .then((res) => {
             console.log(res.data);
             setHello(res.data);
