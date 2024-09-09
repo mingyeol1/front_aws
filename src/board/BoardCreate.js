@@ -48,23 +48,22 @@ function BoardCreate() {
 
   return (
     <>
-      <div className="board-create-read">
-        <div className="board-create-content">
+      <div className="board-create">
+        <form onSubmit={handleCreateBoard}>
           <div className="board-create-header">
             <span className="board-create-category">자유게시판</span>
-            <form className="board-create-header" onSubmit={handleCreateBoard}>
-              <div>
-                <span className="author" name='writer'
-                  style={{ position: "absolute", right: "0", marginRight: "100px" }}>작성자 : {memberData}</span>
-              </div>
-              <input className="board-create-title" name='title' value={createBoard.title} onChange={handleCreateBoardChange} placeholder="제목" />
-              <div className="board-create-body">
-                <textarea className="author" name="content" value={createBoard.content} onChange={handleCreateBoardChange} placeholder="내용" />
-              </div>
-              <button type="submit">완료</button>
-            </form>
           </div>
-        </div>
+          <div className="board-create-content">  
+              <input name='title' value={createBoard.title} onChange={handleCreateBoardChange} placeholder="제목" />
+              <textarea name="content" value={createBoard.content} onChange={handleCreateBoardChange} placeholder="내용" />
+              <div className="board-create-info">
+                <span className="author">작성자 : {memberData}</span>
+              </div>
+          </div>
+          <div className="board-create-footer">
+            <button className="board-create-complete" type="submit">완료</button>
+          </div>
+        </form>
       </div>
     </>
   );

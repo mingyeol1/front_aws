@@ -138,21 +138,18 @@ function BoardRead() {
     return dtoList && (
         <>
             <div className="board-read">
+                <div className="board-header">
+                    <span className="board-category">자유게시판</span>
+                    <button className="board-button-update"><Link to={`/boardupdate/${dtoList.bno}`}>게시글 수정</Link></button>
+                </div>
                 <div className="board-content">
-                    <div className="board-header">
-                        <span className="board-category">자유게시판</span>
-                        <button 
-                            style={{position: "absolute", right: "0", marginRight: "10px"}}>
-                            <Link to={`/boardupdate/${dtoList.bno}`}>게시글 수정</Link>
-                        </button>
-                        <h1 className="board-title">{dtoList.title}</h1>
-                        <div className="board-info">
-                            <span className="author">작성자 : {dtoList.writer}</span>
-                            <span className="date">작성날짜 : {new Date(dtoList.regDate).toLocaleDateString()}</span>
-                        </div>
-                    </div>
+                        <h1 className="board-title">{dtoList.title}</h1>                    
                     <div className="board-body">
                         <p>{dtoList.content}</p>
+                    </div>
+                    <div className="board-info">
+                            <span className="author">작성자 : {dtoList.writer}</span>
+                            <span className="date">작성날짜 : {new Date(dtoList.regDate).toLocaleDateString()}</span>
                     </div>
                 </div>
 
@@ -160,7 +157,7 @@ function BoardRead() {
                     <div className="comment-count">댓글 수 : {commentInfo.total}</div>
                     {comments.map((comment) => (
                         <div className="comment" key={comment.rno}>
-                            <span className="comment-author">{comment.replyer}</span>
+                            <span className="comment-replyer">{comment.replyer}</span>
                             <p className="comment-text">{comment.replyText}</p>
                             <span className="comment-date">{new Date(comment.regDate).toLocaleString()}</span>
                         </div>

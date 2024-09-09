@@ -1,0 +1,33 @@
+.btn {
+    display: block;
+}
+
+.btn.lg {
+    min-width: 120px;
+    height: 60px;
+}
+
+.btn.md {
+    min-width: 60px;
+    height: 45px;
+}
+
+.btn.sm {
+    min-width: 45px;
+    height: 30px;
+}
+
+.btn.second {
+    background: #3333;
+    color: #ffffff;
+}
+
+.btn.black {
+    background: black;
+    color: #ffffff;
+}
+
+.btn.primary {
+    background: #e50914;
+    color: #ffffff;
+}

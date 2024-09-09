@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Board.css";
 import api from "../Member/api";
 import { Link, NavLink, useParams } from "react-router-dom";
+import LinkButton from "../components/LinkButton";
 
 function Board() {
   const [boardData, setBoardData] = useState([]);
@@ -42,15 +43,10 @@ function Board() {
     <div className="listBackground">
       <div className="board-container">
         <form className="board-form">
-        <div className="nav-tabs">
-          <button className="active">핫게시판</button>
-          <button>영화리뷰</button>
-          <button>영화정보</button>
-          <button>자유게시판</button>
-          <button 
-            style={{position: "absolute", right: "0", marginRight: "10px"}}><Link to={`/boardcreate`}>글 작성</Link></button>
-        </div>
-          <h2>board List</h2>
+          <div className="nav-tabs">
+            <LinkButton size="md">글작성</LinkButton>
+          </div>
+
           <div className="table-container">
           <table>
             <thead>
@@ -102,6 +98,7 @@ function Board() {
       </div>
     </div>
   );
+
 }
 
 export default React.memo(Board); // Memoize the Board;

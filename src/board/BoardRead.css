@@ -1,8 +1,12 @@
+
 .board-read {
   background-color: #141414;
   color: #ffffff;
   padding: 20px;
   font-family: Arial, sans-serif;
+  /* background-color: rgba(0, 0, 0, 0.75);
+  padding: 20px;
+  border-radius: 4px; */
 }
 
 .board-content {
@@ -13,8 +17,11 @@
 }
 
 .board-header {
-  margin-bottom: 20px;
   margin-top: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .board-category {
@@ -23,6 +30,21 @@
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.board-button-update {
+  background-color: #3f3f3f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.board-button-update:hover{
+  background-color: red;
+  cursor: pointer;
 }
 
 .board-title {
@@ -40,6 +62,7 @@
 }
 
 .board-body {
+  margin-bottom: 20px;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -62,9 +85,8 @@
   margin-bottom: 10px;
 }
 
-.comment-author {
+.comment-replyer {
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .comment-text {
@@ -135,13 +157,14 @@
 .pagination button {
   width: 50px;
   height: 50px;
-  border-radius: 4px;
   background-color: #333;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  border-radius: 4px;
   margin: 0 5px;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
 
 
 
@@ -153,5 +176,4 @@
 
 .pagination button.active {
   background-color: #e50914;
-  color: white;
 }
