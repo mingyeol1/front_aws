@@ -1,13 +1,14 @@
-import styled from "styled-components";
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation } from 'swiper/modules';
+import { Cookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
+import api from "../../Member/api";
 import "swiper/css";
 import "swiper/css/free-mode";
-import { FreeMode } from 'swiper/modules';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useCallback, useEffect, useState } from "react";
+import "swiper/css/navigation";
+import styled from "styled-components";
 import MovieModal from "../../modal/MovieModal";
-import { Cookies } from 'react-cookie';
-import api, { setAuthToken } from "../../Member/api";
-import { useNavigate } from "react-router-dom";
 
 // Style definitions
 const MainBodyMovieListSectionStyle = styled.div`
@@ -51,13 +52,50 @@ const NoPosterImage = styled.img`
   cursor: pointer;
 `;
 
-// API base URL for images
+const SwiperContainer = styled.div`
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+`;
+
+const NavigationButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  padding: 0;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const PrevButton = styled(NavigationButton)`
+  left: 10px;
+`;
+
+const NextButton = styled(NavigationButton)`
+  right: 10px;
+`;
+
 const baseImageUrl = 'https://image.tmdb.org/t/p/w500';
-
-// API Key
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-
-// Access Token Auth
 const cookies = new Cookies();
 
 const getAuthHeaders = () => {
@@ -67,7 +105,6 @@ const getAuthHeaders = () => {
   };
 };
 
-// Function to fetch movie data
 const fetchMovies = async (options, setData) => {
   try {
     const response = await api.request(options);
@@ -80,56 +117,40 @@ const fetchMovies = async (options, setData) => {
 function MainBodyMovieListSection() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const navigate = useNavigate();
-
-  //현재 상영작 20
   const [row1, setRow1] = useState([]);
-  //개봉 예정작 20
   const [row2, setRow2] = useState([]);
-  //인기영화 20
   const [row3, setRow3] = useState([]);
-  //최고 평점 20
   const [row4, setRow4] = useState([]);
+  const swiperRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   useEffect(() => {
-    //현재 상영작 20
     fetchMovies({
       method: 'GET',
       url: 'https://api.themoviedb.org/3/movie/now_playing',
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
-    }, (data) => {
-      setRow1(data);
-    });
-  
-    //개봉 예정작 20
+    }, setRow1);
+
     fetchMovies({
       method: 'GET',
       url: 'https://api.themoviedb.org/3/movie/upcoming',
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
-    }, (data) => {
-      setRow2(data);
-    });
-  
-    //인기영화 20
+    }, setRow2);
+
     fetchMovies({
       method: 'GET',
       url: 'https://api.themoviedb.org/3/movie/popular',
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
-    }, (data) => {
-      setRow3(data);
-    });
-  
-    //최고평점 20
+    }, setRow3);
+
     fetchMovies({
       method: 'GET',
       url: 'https://api.themoviedb.org/3/movie/top_rated',
       params: { api_key: API_KEY, language: 'ko', page: '1' },
       headers: getAuthHeaders()
-    }, (data) => {
-      setRow4(data);
-    });
+    }, setRow4);
   }, []);
 
   const handleGenreClick = useCallback((genreId, genreName) => {
@@ -142,102 +163,63 @@ function MainBodyMovieListSection() {
     navigate(`/search?keyword=${keyword}`);
   }, [navigate]);
 
+  const handlePrev = (index) => {
+    if (swiperRefs[index].current && swiperRefs[index].current.swiper) {
+      swiperRefs[index].current.swiper.slidePrev();
+    }
+  };
+
+  const handleNext = (index) => {
+    if (swiperRefs[index].current && swiperRefs[index].current.swiper) {
+      swiperRefs[index].current.swiper.slideNext();
+    }
+  };
+
+  const renderMovieList = (movies, title, index) => (
+    <>
+      <SectionTitle>{title}</SectionTitle>
+      <SwiperContainer>
+        <PrevButton onClick={() => handlePrev(index)}>◀️</PrevButton>
+        <MovieListSwiper
+          ref={swiperRefs[index]}
+          slidesPerView="auto"
+          spaceBetween={20}
+          freeMode={true}
+          navigation={{
+            prevEl: `.swiper-button-prev-${index}`,
+            nextEl: `.swiper-button-next-${index}`,
+          }}
+          modules={[FreeMode, Navigation]}
+        >
+          {Array.isArray(movies) && movies.length > 0
+            ? movies.map((movie, movieIndex) => (
+              <MovieListSwiperSlide key={movieIndex} onClick={() => setSelectedMovie(movie)}>
+                {movie.poster_path ? (
+                  <SectionImg 
+                    src={`${baseImageUrl}${movie.poster_path}`}
+                    alt={movie.title || `Movie ${movieIndex + 1}`}
+                  />
+                ) : (
+                  <NoPosterImage src='img/NoPosterImage.jpg' alt="No Poster Available" />
+                )}
+              </MovieListSwiperSlide>
+            ))
+            : null}
+        </MovieListSwiper>
+        <NextButton onClick={() => handleNext(index)}>▶️</NextButton>
+      </SwiperContainer>
+    </>
+  );
+
   return (
     <MainBodyMovieListSectionStyle>
-      <SectionTitle>현재 상영작 20</SectionTitle>
-      <MovieListSwiper
-        slidesPerView="auto"
-        spaceBetween={20}
-        freeMode={true}
-        modules={[FreeMode]}
-      >
-        {Array.isArray(row1) && row1.length > 0
-          ? row1.map((movie, index) => (
-            <MovieListSwiperSlide key={index} onClick={() => setSelectedMovie(movie)}>
-              {movie.poster_path ? (
-                <SectionImg 
-                  src={`${baseImageUrl}${movie.poster_path}`}
-                  alt={movie.title || `Now Playing 20 Movie ${index + 1}`}
-                />
-              ) : (
-                <NoPosterImage src='img/NoPosterImage.jpg' alt="No Poster Available" />
-              )}
-            </MovieListSwiperSlide>
-          ))
-          : null}
-      </MovieListSwiper>
-
-      <SectionTitle>개봉 예정작 20</SectionTitle>
-      <MovieListSwiper
-        slidesPerView="auto"
-        spaceBetween={20}
-        freeMode={true}
-        modules={[FreeMode]}
-      >
-        {Array.isArray(row2) && row2.length > 0
-          ? row2.map((movie, index) => (
-            <MovieListSwiperSlide key={index} onClick={() => setSelectedMovie(movie)}>
-              {movie.poster_path ? (
-                <SectionImg 
-                  src={`${baseImageUrl}${movie.poster_path}`}
-                  alt={movie.title || `Upcoming 20 Movie ${index + 1}`}
-                />
-              ) : (
-                <NoPosterImage src='img/NoPosterImage.jpg' alt="No Poster Available" />
-              )}
-            </MovieListSwiperSlide>
-          ))
-          : null}
-      </MovieListSwiper>
-
-      <SectionTitle>인기영화 20</SectionTitle>
-      <MovieListSwiper
-        slidesPerView="auto"
-        spaceBetween={20}
-        freeMode={true}
-        modules={[FreeMode]}
-      >
-        {Array.isArray(row3) && row3.length > 0
-          ? row3.map((movie, index) => (
-            <MovieListSwiperSlide key={index} onClick={() => setSelectedMovie(movie)}>
-              {movie.poster_path ? (
-                <SectionImg 
-                  src={`${baseImageUrl}${movie.poster_path}`}
-                  alt={movie.title || `Popular Movie 20 ${index + 1}`}
-                />
-              ) : (
-                <NoPosterImage src='img/NoPosterImage.jpg' alt="No Poster Available" />
-              )}
-            </MovieListSwiperSlide>
-          ))
-          : null}
-      </MovieListSwiper>
-
-      <SectionTitle>최고평점 20</SectionTitle>
-      <MovieListSwiper
-        slidesPerView="auto"
-        spaceBetween={20}
-        freeMode={true}
-        modules={[FreeMode]}
-      >
-        {Array.isArray(row4) && row4.length > 0
-          ? row4.map((movie, index) => (
-            <MovieListSwiperSlide key={index} onClick={() => setSelectedMovie(movie)}>
-              {movie.poster_path ? (
-                <SectionImg 
-                  src={`${baseImageUrl}${movie.poster_path}`}
-                  alt={movie.title || `Top Rated 20 Movie ${index + 1}`}
-                />
-              ) : (
-                <NoPosterImage src='img/NoPosterImage.jpg' alt="No Poster Available" />
-              )}
-            </MovieListSwiperSlide>
-          ))
-          : null}
-      </MovieListSwiper>
+      {renderMovieList(row1, "현재 상영작 20", 0)}
+      {renderMovieList(row2, "개봉 예정작 20", 1)}
+      {renderMovieList(row3, "인기영화 20", 2)}
+      {renderMovieList(row4, "최고평점 20", 3)}
 
       {selectedMovie && (
-        <MovieModal 
+        <MovieModal
           movie={selectedMovie} 
           onClose={() => setSelectedMovie(null)}
           onGenreClick={handleGenreClick}

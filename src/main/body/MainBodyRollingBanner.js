@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import MovieModal from "../../modal/MovieModal";
-import { useNavigate } from "react-router-dom";
 
 const MainBodyRollingBannerAreaStyle = styled.div`
   height: 60vh;
@@ -109,7 +109,10 @@ function MainBodyRollingBanner({ clearSearchValue = () => {}, onKeywordClick = (
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const swiperRef = useRef(null);
 
   const fetchPopularMovies = useCallback(async () => {
     try {
@@ -142,8 +145,28 @@ function MainBodyRollingBanner({ clearSearchValue = () => {}, onKeywordClick = (
     navigate(`/search?keyword=${keyword}`);  // 이 부분을 수정
   }, [clearSearchValue, navigate]);
 
-  const handleMovieClick = useCallback((movie) => {
-    setSelectedMovie(movie);
+  const handleSlideClick = useCallback((index) => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      const swiper = swiperRef.current.swiper;
+      if (index === activeIndex) {
+        // 클릭한 슬라이드가 현재 활성(중앙) 슬라이드인 경우
+        const movie = popularMovies[index];
+        setSelectedMovie(movie);
+        setIsModalOpen(true);
+        swiper.autoplay.stop();  // 모달이 열릴 때 자동 재생 중지
+      } else {
+        // 클릭한 슬라이드가 중앙이 아닌 경우
+        swiper.slideToLoop(index, 500);
+      }
+    }
+  }, [activeIndex, popularMovies]);
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedMovie(null);
+    setIsModalOpen(false);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.start();  // 모달이 닫힐 때 자동 재생 재개
+    }
   }, []);
 
   const swiperParams = useMemo(() => ({
@@ -164,8 +187,14 @@ function MainBodyRollingBanner({ clearSearchValue = () => {}, onKeywordClick = (
       disableOnInteraction: false,
     },
     speed: 1000,
-    modules: [Autoplay, EffectCoverflow]
-  }), []);
+    modules: [Autoplay, EffectCoverflow],
+    onSlideChange: (swiper) => {
+      setActiveIndex(swiper.realIndex);
+      if (!isModalOpen) {
+        setSelectedMovie(null);  // 모달이 열려있지 않을 때만 선택된 영화 초기화
+      }
+    },
+  }), [isModalOpen]);
 
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>;
@@ -175,9 +204,12 @@ function MainBodyRollingBanner({ clearSearchValue = () => {}, onKeywordClick = (
     <MainBodyRollingBannerAreaStyle>
       <RollingImgArea>
         {isLoaded && (
-          <StyledSwiper {...swiperParams}>    
-            {popularMovies.map((movie) => (
-              <StyledSwiperSlide key={movie.id} onClick={() => handleMovieClick(movie)}>
+          <StyledSwiper {...swiperParams} ref={swiperRef}>    
+            {popularMovies.map((movie, index) => (
+              <StyledSwiperSlide 
+                key={movie.id} 
+                onClick={() => handleSlideClick(index)}
+              >
                 <SlideImage 
                   src={`${baseImageUrl}${movie.backdrop_path}`}
                   alt={`영화 ${movie.title}의 배경 이미지`}
@@ -189,13 +221,13 @@ function MainBodyRollingBanner({ clearSearchValue = () => {}, onKeywordClick = (
           </StyledSwiper>
         )}
       </RollingImgArea>
-      {selectedMovie && (
+      {isModalOpen && selectedMovie && (
         <MovieModal
           movie={selectedMovie} 
-          onClose={() => setSelectedMovie(null)}
+          onClose={handleCloseModal}
           onGenreClick={handleGenreClick}
           onKeywordClick={handleKeywordClick}
-          clearSearchValue={clearSearchValue}  // 이 prop을 추가
+          clearSearchValue={clearSearchValue}
         />
       )}
     </MainBodyRollingBannerAreaStyle>
