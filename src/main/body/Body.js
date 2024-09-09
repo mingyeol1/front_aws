@@ -6,8 +6,6 @@ import { MainBodyMovieListSection } from './MainBodyMovieListSection';
 import { MainBodyRollingBanner } from "./MainBodyRollingBanner";
 import MeetModal from '../Meet/MeetModal';
 
-
-
 const MainBodyMovieListArea = styled.div`
   width: 100%;
 `;
@@ -41,8 +39,13 @@ function Body() {
 
   const handleRecruitmentClick = () => {
     setIsModalOpen(true);
-    // 랜덤하게 모달 버전 선택 (1 또는 2)
     setModalVersion(Math.floor(Math.random() * 2) + 1);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -56,7 +59,7 @@ function Body() {
       </RecruitmentIcon>
       {isModalOpen && (
         <MeetModal 
-          onClose={() => setIsModalOpen(false)} 
+          onClose={handleCloseModal} 
           version={modalVersion}
         />
       )}

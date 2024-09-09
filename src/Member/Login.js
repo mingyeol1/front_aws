@@ -24,7 +24,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await api.post('/api/auth/login', loginData);
-      console.log(response.data);
+
 
       const { accessToken, refreshToken } = response.data;
 
