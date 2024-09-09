@@ -52,19 +52,10 @@ const SearchInput = styled.input`
   }
 `;
 
-const CreateButton = styled.button`
-  padding: 10px 20px;
-  background-color: #e50914;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: auto;
-  margin-right: 20px;
-`;
-
 const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
   color: white;
@@ -72,6 +63,7 @@ const CloseButton = styled.button`
   cursor: pointer;
   transition: color 0.3s;
   padding: 10px;
+  z-index: 10;
 
   &:hover {
     color: #e50914;
@@ -95,7 +87,7 @@ const MeetItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 240px;
+  height: 280px;
 `;
 
 const MeetInfo = styled.div`
@@ -106,7 +98,7 @@ const MeetInfo = styled.div`
 
 const MeetImage = styled.img`
   width: 100%;
-  height: 120px; 
+  height: 200px; 
   object-fit: cover; 
   border-radius: 8px;
   margin-bottom: 8px;
@@ -154,11 +146,34 @@ const ApplyButton = styled.button`
   margin-top: 5px;
 `;
 
+const Paginationsection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  position: relative;  // 추가: CreateButton의 절대 위치 지정을 위해
+`;
+
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;  // 변경: 전체 너비를 사용하도록 설정
   padding: 10px 0;
+`;
+
+const CreateButton = styled.button`
+  padding: 10px 20px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;  // 변경: 절대 위치로 설정
+  right: 20px;  // 변경: 오른쪽에서 20px 떨어진 위치에 고정
+  top: 50%;  // 추가: 세로 중앙 정렬을 위해
+  transform: translateY(-50%);  // 추가: 세로 중앙 정렬을 위해
 `;
 
 const PageButton = styled.button`
@@ -295,7 +310,7 @@ const MeetModal = ({ onClose }) => {
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={e => e.stopPropagation()}>
           <TopSection>
-            <SearchBar>
+            {/* <SearchBar>
               <SearchInput 
                 type="text" 
                 placeholder="검색" 
@@ -303,8 +318,7 @@ const MeetModal = ({ onClose }) => {
                 onChange={handleSearchChange}
               />
               <FaSearch style={{ marginLeft: '10px', color: '#888' }} />
-            </SearchBar>
-            <CreateButton onClick={handleMeetCreateClick}>모집하기</CreateButton>
+            </SearchBar> */}
             <CloseButton onClick={onClose}><FaTimes /></CloseButton>
           </TopSection>
 
@@ -339,7 +353,7 @@ const MeetModal = ({ onClose }) => {
             ))}
           </MeetingsGrid>
 
-          <Pagination>
+          <Paginationsection>
 
             <Pagination>
               <PageButton 
@@ -355,9 +369,9 @@ const MeetModal = ({ onClose }) => {
               >
                 다음
               </PageButton>
+              <CreateButton onClick={handleMeetCreateClick}>모집하기</CreateButton>
             </Pagination>
-
-          </Pagination>
+          </Paginationsection>
         </ModalContent>
       </ModalOverlay>
 
