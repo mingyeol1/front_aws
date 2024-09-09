@@ -195,16 +195,17 @@ const PageButton = styled.button`
 
 const MeetModal = ({ onClose }) => {
   const [cookies] = useCookies(['accessToken']);
-  const [meetings, setMeetings] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showMeetCreate, setShowMeetCreate] = useState(false);
   const [showMeetApply, setShowMeetApply] = useState(false);
-  const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isApplyOpen, setIsApplyOpen] = useState(false);
+  const [meetings, setMeetings] = useState([]);
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const [showApplyModal, setShowApplyModal] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -212,6 +213,16 @@ const MeetModal = ({ onClose }) => {
       fetchMeetings();
     }
   }, [cookies.accessToken, currentPage]); // currentPage 추가
+
+  const handleCloseModal = () => {
+    setShowApplyModal(false);
+    setSelectedMeeting(null);
+  };
+
+  const handleMeetingDeleted = () => {
+    fetchMeetings(); // 게시글 목록을 새로고침
+    handleCloseModal(); // Apply 모달을 닫음
+  };
 
   const checkLoginStatus = async () => {
     if (cookies.accessToken) {
@@ -385,10 +396,11 @@ const MeetModal = ({ onClose }) => {
 
       {showMeetApply && selectedMeeting && (
         <MeetApply
-          meeting={selectedMeeting}
-          onClose={handleMeetApplyClose}
-          isLoggedIn={isLoggedIn}
-          userData={userData}
+        meeting={selectedMeeting}
+        onClose={handleCloseModal}
+        isLoggedIn={isLoggedIn}
+        userData={userData}
+        onMeetingDeleted={handleMeetingDeleted}
         />
       )}
     </>

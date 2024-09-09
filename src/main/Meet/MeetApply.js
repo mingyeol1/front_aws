@@ -87,27 +87,6 @@ const InfoItem = styled.p`
   margin-bottom: 5px;
 `;
 
-const CommentSection = styled.div`
-  margin-top: 20px;
-`;
-
-const CommentForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const CommentInput = styled.textarea`
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #333;
-  background-color: #222;
-  color: white;
-  margin-bottom: 10px;
-  min-height: 100px;
-  resize: vertical;
-`;
-
 const Button = styled.button`
   padding: 10px 20px;
   background-color: #e50914;
@@ -116,106 +95,33 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  align-self: flex-end;
+  margin-right: 10px;
+  opacity: ${props => props.disabled ? 0.5 : 1};
+  pointer-events: ${props => props.disabled ? 'none' : 'auto'};
 `;
 
-const CommentList = styled.ul`
-  list-style-type: none;
-  padding: 0;
+const DeleteButton = styled(Button)`
+  background-color: #e50914;
 `;
 
-const CommentItem = styled.li`
-  background-color: #222;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CommentContent = styled.div`
-  flex-grow: 1;
-`;
-
-const CommentActions = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const ActionButton = styled.button`
-  background: none;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    color: #e50914;
-  }
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-
-  button {
-    background-color: #e50914;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border-radius: 3px;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: #888;
-      cursor: not-allowed;
-    }
-  }
-
-  span {
-    margin: 0 10px;
-  }
-`;
-
-const EditInput = styled.input`
-  width: 100%;
-  padding: 5px;
-  margin-top: 5px;
-  border: 1px solid #333;
-  background-color: #222;
-  color: white;
-`;
-
-const ErrorMessage = styled.p`
-  color: #e50914;
-  margin-top: 10px;
-`;
-
-const SuccessMessage = styled.p`
-  color: #4CAF50;
-  margin-top: 10px;
-`;
-
-const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-  const [isAuthor, setIsAuthor] = useState(false);
+const MeetApply = ({ meeting, onClose, isLoggedIn, userData, onMeetingDeleted }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [editingComment, setEditingComment] = useState(null);
-  const [editContent, setEditContent] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [comment, setComment] = useState('');
+  const [isAuthor, setIsAuthor] = useState(false);
 
   useEffect(() => {
     fetchComments();
     checkIsAuthor();
-  }, [currentPage, meeting.meetId]);
+  }, [currentPage, meeting.meetId, userData]);
+
+  const checkIsAuthor = () => {
+    if (userData && meeting) {
+      setIsAuthor(userData.mnick === meeting.meetWriter);
+    }
+  };
 
   const fetchComments = async () => {
     try {
@@ -229,80 +135,23 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
       setTotalPages(response.data.totalPage || 1);
     } catch (error) {
       console.error('Error fetching comments:', error);
-      setComments([]);
-      setErrorMessage('댓글을 불러오는데 실패했습니다.');
-    }
-  };
-
-  const checkIsAuthor = async () => {
-    try {
-      const response = await api.get(`/api/meet/${meeting.meetId}/isAuthor`);
-      setIsAuthor(response.data.isAuthor);
-    } catch (error) {
-      console.error('Error checking author status:', error);
-    }
-  };
-
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!isLoggedIn) {
-      setErrorMessage('로그인이 필요한 서비스입니다.');
-      return;
-    }
-    try {
-      const response = await api.post(`/api/meetreplyes/register`, {
-        meetId: meeting.meetId,
-        replyText: comment,
-        replyer: userData.mnick
-      });
-      setComment('');
-      fetchComments();
-      setSuccessMessage('댓글이 성공적으로 등록되었습니다.');
-      setTimeout(() => setSuccessMessage(''), 3000);
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-      setErrorMessage('댓글 등록에 실패했습니다. 다시 시도해 주세요.');
-    }
-  };
-
-  const handleCommentDelete = async (meetRid) => {
-    if (window.confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
-      try {
-        await api.delete(`/api/meetreplyes/${meetRid}`);
-        fetchComments();
-        setSuccessMessage('댓글이 성공적으로 삭제되었습니다.');
-        setTimeout(() => setSuccessMessage(''), 3000);
-      } catch (error) {
-        console.error('Error deleting comment:', error);
-        setErrorMessage('댓글 삭제에 실패했습니다. 다시 시도해 주세요.');
-      }
-    }
-  };
-
-  const handleCommentUpdate = async (meetRid) => {
-    try {
-      await api.put(`/api/meetreplyes/${meetRid}`, {
-        replyText: editContent
-      });
-      setEditingComment(null);
-      fetchComments();
-      setSuccessMessage('댓글이 성공적으로 수정되었습니다.');
-      setTimeout(() => setSuccessMessage(''), 3000);
-    } catch (error) {
-      console.error('Error updating comment:', error);
-      setErrorMessage('댓글 수정에 실패했습니다. 다시 시도해 주세요.');
     }
   };
 
   const handleUpdate = () => {
-    setShowUpdateModal(true);
+    if (isAuthor) {
+      setShowUpdateModal(true);
+    } else {
+      alert('게시글 작성자만 수정할 수 있습니다.');
+    }
   };
 
   const handleUpdateComplete = async (updatedMeeting) => {
     try {
       await api.put(`/api/meet/${meeting.meetId}`, updatedMeeting);
       setShowUpdateModal(false);
-      fetchMeetingDetails();
+      // Refresh the meeting details or close the modal
+      onClose();
     } catch (error) {
       console.error('Error updating meeting:', error);
       alert('모임 수정 중 오류가 발생했습니다.');
@@ -310,22 +159,39 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm('정말로 이 모임을 삭제하시겠습니까?')) {
-      try {
-        await api.delete(`/api/meet/${meeting.meetId}`);
-        onClose();
-      } catch (error) {
-        console.error('Error deleting meeting:', error);
+    if (isAuthor) {
+      if (window.confirm('정말로 이 모집글을 삭제하시겠습니까?')) {
+        try {
+          await api.delete(`/api/meet/delete/${meeting.meetId}`);
+          alert('모집글이 성공적으로 삭제되었습니다.');
+          onMeetingDeleted(); // 부모 컴포넌트에 삭제 알림
+          onClose(); // 모달 닫기
+        } catch (error) {
+          console.error('Error deleting meeting:', error);
+          alert('모집글 삭제 중 오류가 발생했습니다.');
+        }
       }
+    } else {
+      alert('게시글 작성자만 삭제할 수 있습니다.');
     }
   };
 
-  const fetchMeetingDetails = async () => {
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      alert('댓글을 작성하려면 로그인이 필요합니다.');
+      return;
+    }
     try {
-      const response = await api.get(`/api/meet/${meeting.meetId}`);
-      // Update the meeting details in the parent component or state
+      await api.post(`/api/meetreplyes/register`, {
+        meetId: meeting.meetId,
+        replyText: comment,
+        replyer: userData.mnick
+      });
+      setComment('');
+      fetchComments();
     } catch (error) {
-      console.error('Error fetching meeting details:', error);
+      console.error('Error submitting comment:', error);
     }
   };
 
@@ -335,86 +201,53 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
         <CloseButton onClick={onClose}><FaTimes /></CloseButton>
         <ImageSection>
           {meeting.imageUrls && meeting.imageUrls.length > 0 && (
-            meeting.imageUrls.map((url, index) => (
-              <MeetImage
-                key={index}
-                src={url}  // S3 URL을 직접 사용
-                alt={`미팅 이미지 ${index + 1}`}
-              />
-            ))
+            <MeetImage src={meeting.imageUrls[0]} alt="미팅 이미지" />
           )}
         </ImageSection>
         <InfoSection>
           <Title>{meeting.meetTitle}</Title>
-          <InfoItem>모집 영화: {meeting.movieTitle}</InfoItem>
+          <InfoItem>작성자: {meeting.meetWriter}</InfoItem>
           <InfoItem>모임 시간: {new Date(meeting.meetTime).toLocaleString()}</InfoItem>
           <InfoItem>모집 인원: {meeting.personnel}</InfoItem>
           <InfoItem>모임 내용: {meeting.meetContent}</InfoItem>
-          {isAuthor && (
+          <div>
+            <DeleteButton onClick={handleDelete} disabled={!isAuthor}>삭제하기</DeleteButton>
+          </div>
+          
+          {/* Comment section */}
+          <h3>댓글</h3>
+          <form onSubmit={handleCommentSubmit}>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="댓글을 입력하세요..."
+            />
+            <Button type="submit">댓글 등록</Button>
+          </form>
+          {comments.map((comment) => (
+            <div key={comment.meetRid}>
+              <p>{comment.replyText}</p>
+              <small>{comment.replyer} - {new Date(comment.regDate).toLocaleString()}</small>
+            </div>
+          ))}
+          {totalPages > 1 && (
             <div>
-              <Button onClick={handleUpdate}>수정하기</Button>
-              <Button onClick={handleDelete}>삭제하기</Button>
+              <Button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                disabled={currentPage === 1}
+              >
+                이전
+              </Button>
+              <span>{currentPage} / {totalPages}</span>
+              <Button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+                disabled={currentPage === totalPages}
+              >
+                다음
+              </Button>
             </div>
           )}
-          
-          <CommentSection>
-            <h3>댓글</h3>
-            <CommentForm onSubmit={handleCommentSubmit}>
-              <CommentInput
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="댓글을 입력하세요..."
-              />
-              <Button type="submit">댓글 등록</Button>
-            </CommentForm>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
-            <CommentList>
-              {comments.map((comment) => (
-                <CommentItem key={comment.meetRid}>
-                  <CommentContent>
-                    <p>{comment.replyText}</p>
-                    <small>{comment.replyer} - {new Date(comment.regDate).toLocaleString()}</small>
-                  </CommentContent>
-                  {isLoggedIn && userData.mnick === comment.replyer && (
-                    <CommentActions>
-                      <ActionButton onClick={() => handleCommentDelete(comment.meetRid)}><FaTrash /></ActionButton>
-                      <ActionButton onClick={() => {
-                        setEditingComment(comment.meetRid);
-                        setEditContent(comment.replyText);
-                      }}><FaEdit /></ActionButton>
-                    </CommentActions>
-                  )}
-                </CommentItem>
-              ))}
-            </CommentList>
-            {totalPages > 1 && (
-              <Pagination>
-                <Button 
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-                  disabled={currentPage === 1}
-                >
-                  이전
-                </Button>
-                <span>{currentPage} / {totalPages}</span>
-                <Button 
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
-                  disabled={currentPage === totalPages}
-                >
-                  다음
-                </Button>
-              </Pagination>
-            )}
-          </CommentSection>
         </InfoSection>
-
-        {showUpdateModal && (
-          <MeetUpdate
-            meeting={meeting}
-            onClose={() => setShowUpdateModal(false)}
-            onUpdate={handleUpdateComplete}
-          />
-        )}
       </ModalContent>
     </ModalOverlay>
   );
