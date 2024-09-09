@@ -101,10 +101,10 @@ const Button = styled.button`
 `;
 
 const DeleteButton = styled(Button)`
-  background-color: #d9534f;
+  background-color: #e50914;
 `;
 
-const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
+const MeetApply = ({ meeting, onClose, isLoggedIn, userData, onMeetingDeleted }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -146,23 +146,6 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
     }
   };
 
-  const handleDelete = async () => {
-    if (isAuthor) {
-      if (window.confirm('정말로 이 모집글을 삭제하시겠습니까?')) {
-        try {
-          await api.delete(`/api/meet/delete/${meeting.meetId}`);
-          alert('모집글이 성공적으로 삭제되었습니다.');
-          onClose();
-        } catch (error) {
-          console.error('Error deleting meeting:', error);
-          alert('모집글 삭제 중 오류가 발생했습니다.');
-        }
-      }
-    } else {
-      alert('게시글 작성자만 삭제할 수 있습니다.');
-    }
-  };
-
   const handleUpdateComplete = async (updatedMeeting) => {
     try {
       await api.put(`/api/meet/${meeting.meetId}`, updatedMeeting);
@@ -172,6 +155,24 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
     } catch (error) {
       console.error('Error updating meeting:', error);
       alert('모임 수정 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (isAuthor) {
+      if (window.confirm('정말로 이 모집글을 삭제하시겠습니까?')) {
+        try {
+          await api.delete(`/api/meet/delete/${meeting.meetId}`);
+          alert('모집글이 성공적으로 삭제되었습니다.');
+          onMeetingDeleted(); // 부모 컴포넌트에 삭제 알림
+          onClose(); // 모달 닫기
+        } catch (error) {
+          console.error('Error deleting meeting:', error);
+          alert('모집글 삭제 중 오류가 발생했습니다.');
+        }
+      }
+    } else {
+      alert('게시글 작성자만 삭제할 수 있습니다.');
     }
   };
 
@@ -210,7 +211,6 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
           <InfoItem>모집 인원: {meeting.personnel}</InfoItem>
           <InfoItem>모임 내용: {meeting.meetContent}</InfoItem>
           <div>
-            {/* <Button onClick={handleUpdate} disabled={!isAuthor}>수정하기</Button> */}
             <DeleteButton onClick={handleDelete} disabled={!isAuthor}>삭제하기</DeleteButton>
           </div>
           
@@ -248,14 +248,6 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
             </div>
           )}
         </InfoSection>
-
-        {showUpdateModal && (
-          <MeetUpdate
-            meeting={meeting}
-            onClose={() => setShowUpdateModal(false)}
-            onUpdate={handleUpdateComplete}
-          />
-        )}
       </ModalContent>
     </ModalOverlay>
   );
