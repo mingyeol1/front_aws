@@ -64,6 +64,10 @@
     color: #aaaaaa;
 }
 
+.board-update-info .author {
+    margin-right: 20px;
+}
+
 .board-update-footer {
     display: flex;
     justify-content: center;

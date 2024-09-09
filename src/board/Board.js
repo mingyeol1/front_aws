@@ -4,6 +4,7 @@ import "./Board.css";
 import api from "../Member/api";
 import { Link, NavLink, useParams } from "react-router-dom";
 import LinkButton from "../components/LinkButton";
+import { useCookies } from "react-cookie";      // 3-1. 로그인한 유저의 ID를 가져오기 위해 필요한 import 추가
 
 function Board() {
   const [boardData, setBoardData] = useState([]);
@@ -38,13 +39,29 @@ function Board() {
       console.error("There was an error fetching the data!", error);
     }
   };
+
+  const [cookies] = useCookies(['accessToken']);      // 3-2. 로그인한 유저의 ID를 가져오기 위해 컴포넌트 내부에 다음 상태와 쿠키 사용 추가
+  const isLoggedIn = () => {          // 9-2. 로그인 보안 기능 추가
+    return !!cookies.accessToken; // accessToken이 있으면 로그인 상태로 간주
+  };
+  const handleUpdateClick = (e) => {      // 9-2. 로그인 보안 기능 추가
+    console.log(e);
+    console.log(isLoggedIn());
+    
+    if (!isLoggedIn()) {
+      
+      e.preventDefault(); // 링크 이동 방지
+      alert("로그인 해주세요");
+    }
+    // 로그인 상태라면 기본 동작 (링크 이동) 실행
+  };
     
   return (
     <div className="listBackground">
       <div className="board-container">
         <form className="board-form">
           <div className="nav-tabs">
-            <LinkButton size="md">글작성</LinkButton>
+            <LinkButton size="md" onClick={handleUpdateClick}>글작성</LinkButton>
           </div>
 
           <div className="table-container">

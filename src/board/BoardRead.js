@@ -22,6 +22,7 @@ function BoardRead() {
         const fetchMemberData = async () => {   // 3-3. 로그인한 유저의 ID를 가져오기 위해 useEffect 훅 수정, 의존성 배열에 추가
             try {
                 const response = await api.get("/api/auth/modify");
+                console.log("response: 뭘까요?", response);
                 const { mnick } = response.data;
                 setMemberData(mnick);
                 setNewComment(prev => ({ ...prev, replyer: mnick }));
@@ -135,12 +136,30 @@ function BoardRead() {
         }
     };
 
+    const isLoggedIn = () => {          // 9-2. 로그인 보안 기능 추가
+        return !!cookies.accessToken; // accessToken이 있으면 로그인 상태로 간주
+    };
+    const handleUpdateClick = (e) => {      // 9-2. 로그인 보안 기능 추가
+        if (!isLoggedIn()) {
+          e.preventDefault(); // 링크 이동 방지
+          alert("로그인 해주세요");
+        }else if (memberData !== dtoList.writer) {
+            e.preventDefault();
+            alert("작성자가 아닙니다.");
+        }
+        // 로그인 상태라면 기본 동작 (링크 이동) 실행
+      };
+
     return dtoList && (
         <>
             <div className="board-read">
                 <div className="board-header">
                     <span className="board-category">자유게시판</span>
-                    <button className="board-button-update"><Link to={`/boardupdate/${dtoList.bno}`}>게시글 수정</Link></button>
+                    <button className="board-button-update">
+                        <Link to={`/boardupdate/${dtoList.bno}`} onClick={handleUpdateClick}>   {/* 9-2. 로그인 보안 기능 추가 */}
+                            게시글 수정
+                        </Link>
+                    </button>
                 </div>
                 <div className="board-content">
                         <h1 className="board-title">{dtoList.title}</h1>                    
@@ -175,7 +194,7 @@ function BoardRead() {
                                 ></textarea>
                             </div>
                             <div className="comment-footer">
-                                <span className="comment-author">작성자: {memberData}</span>
+                                <span className="comment-author">작성자: {memberData} </span>
                                 <button type="submit" className="comment-submit-btn">등록</button>
                             </div>
                         </form>
