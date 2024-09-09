@@ -21,8 +21,8 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   position: relative;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
   background-color: #141414;
   border-radius: 20px;
   padding: 20px;
@@ -32,25 +32,13 @@ const ModalContent = styled.div`
   overflow-y: auto;
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-`;
-
 const SearchBar = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   background-color: #2b2b2b;
   border-radius: 30px;
   padding: 10px 20px;
+  width: 60%;
 `;
 
 const SearchInput = styled.input`
@@ -64,7 +52,7 @@ const SearchInput = styled.input`
   }
 `;
 
-const Button = styled.button`
+const CreateButton = styled.button`
   padding: 10px 20px;
   background-color: #e50914;
   color: white;
@@ -72,20 +60,105 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin-left: 10px;
+  margin-left: auto;
+  margin-right: 20px;
+`;
+
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  font-size: 40px;  
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 10px;
+
+  &:hover {
+    color: #e50914;
+  }
 `;
 
 const MeetingsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 20px;
+  width: 100%;
+  flex-grow: 1;
+  margin-bottom: 20px;
+`;
+
+const MeetItem = styled.div`
+  background-color: #2b2b2b;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 240px;
+`;
+
+const MeetInfo = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const MeetImage = styled.img`
+  width: 100%;
+  height: 120px; 
+  object-fit: cover; 
+  border-radius: 8px;
+  margin-bottom: 8px;
+`;
+
+const TopSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const MeetHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+const MeetTitle = styled.h3`
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+`;
+
+const MeetDetails = styled.div`
+  text-align: right;
+`;
+
+const MeetDetail = styled.p`
+  font-size: 12px;
+  margin: 0 0 3px 0;
+`;
+
+const ApplyButton = styled.button`
+  padding: 8px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 5px;
 `;
 
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  padding: 10px 0;
 `;
 
 const PageButton = styled.button`
@@ -99,29 +172,10 @@ const PageButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
-`;
 
-const MeetItem = styled.div`
-  background-color: #2b2b2b;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 300px;
-`;
-
-const MeetInfo = styled.div`
-  flex-grow: 1;
-  margin-bottom: 10px;
-`;
-
-const MeetImage = styled.img`
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  &:hover {
+    color: #e50914;
+  }
 `;
 
 const MeetModal = ({ onClose }) => {
@@ -135,11 +189,14 @@ const MeetModal = ({ onClose }) => {
   const [userData, setUserData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isApplyOpen, setIsApplyOpen] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
-    fetchMeetings();
-  }, [cookies.accessToken, currentPage]);
+    if (!isNaN(currentPage) && currentPage > 0) {
+      fetchMeetings();
+    }
+  }, [cookies.accessToken, currentPage]); // currentPage 추가
 
   const checkLoginStatus = async () => {
     if (cookies.accessToken) {
@@ -163,11 +220,17 @@ const MeetModal = ({ onClose }) => {
       if (token) {
         setAuthToken(token);
       }
-
-      const response = await api.get('/api/meet/list', {
-        params: { page: currentPage, size: 9 }
+      
+      const endpoint = token ? '/api/meet/list' : '/api/public/review/list';
+  
+      console.log('Fetching meetings for page:', currentPage);
+  
+      const response = await api.get(endpoint, {
+        params: { page: currentPage, size: 6 }
       });
-
+  
+      console.log('API response:', response.data);
+  
       if (response.data && response.data.dtoList) {
         setMeetings(response.data.dtoList);
         setTotalPages(response.data.totalPage);
@@ -176,8 +239,15 @@ const MeetModal = ({ onClose }) => {
         setMeetings([]);
       }
     } catch (error) {
-      console.error('Error fetching meetings:', error);
+      console.error('Error fetching meetings:', error.response?.data || error.message);
       setMeetings([]);
+    }
+  };
+
+  // 페이지 변경 함수 수정
+  const changePage = (newPage) => {
+    if (!isNaN(newPage) && newPage > 0) {
+      setCurrentPage(newPage);
     }
   };
 
@@ -204,9 +274,16 @@ const MeetModal = ({ onClose }) => {
     if (isLoggedIn) {
       setSelectedMeeting(meeting);
       setShowMeetApply(true);
+      setIsApplyOpen(true);
     } else {
       alert('로그인이 필요한 서비스입니다.');
     }
+  };
+
+  const handleMeetApplyClose = () => {
+    setShowMeetApply(false);
+    setSelectedMeeting(null);
+    setIsApplyOpen(false);
   };
 
   const filteredMeetings = meetings.filter(meeting =>
@@ -217,18 +294,19 @@ const MeetModal = ({ onClose }) => {
     <>
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={e => e.stopPropagation()}>
-          <CloseButton onClick={onClose}><FaTimes /></CloseButton>
-          
-          <SearchBar>
-            <SearchInput 
-              type="text" 
-              placeholder="검색" 
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <FaSearch style={{ marginRight: '10px', color: '#888' }} />
-            <Button onClick={handleMeetCreateClick}>모집하기</Button>
-          </SearchBar>
+          <TopSection>
+            <SearchBar>
+              <SearchInput 
+                type="text" 
+                placeholder="검색" 
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <FaSearch style={{ marginLeft: '10px', color: '#888' }} />
+            </SearchBar>
+            <CreateButton onClick={handleMeetCreateClick}>모집하기</CreateButton>
+            <CloseButton onClick={onClose}><FaTimes /></CloseButton>
+          </TopSection>
 
           <MeetingsGrid>
             {filteredMeetings.map(meeting => (
@@ -240,29 +318,45 @@ const MeetModal = ({ onClose }) => {
                   />
                 )}
                 <MeetInfo>
-                  <h3>{meeting.meetTitle}</h3>
-                  <p>모집인원: {meeting.personnel}</p>
-                  <p>모임시간: {new Date(meeting.meetTime).toLocaleString()}</p>
+                  <MeetHeader>
+                    <MeetTitle>{meeting.meetTitle}</MeetTitle>
+                    <MeetDetails>
+                      <MeetDetail>모집인원: {meeting.personnel}</MeetDetail>
+                      <MeetDetail>
+                        모임시간: {new Date(meeting.meetTime).toLocaleString('ko-KR', {
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                        })}
+                      </MeetDetail>
+                    </MeetDetails>
+                  </MeetHeader>
                 </MeetInfo>
-                <Button onClick={() => handleMeetApplyClick(meeting)}>신청하기</Button>
+                <ApplyButton onClick={() => handleMeetApplyClick(meeting)}>신청하기</ApplyButton>
               </MeetItem>
             ))}
           </MeetingsGrid>
 
           <Pagination>
-            <PageButton 
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              이전
-            </PageButton>
-            <span>{currentPage} / {totalPages}</span>
-            <PageButton 
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              다음
-            </PageButton>
+
+            <Pagination>
+              <PageButton 
+                onClick={() => changePage(currentPage - 1)}
+                disabled={currentPage <= 1}
+              >
+                이전
+              </PageButton>
+              <span>{currentPage}  {totalPages}</span>
+              <PageButton 
+                onClick={() => changePage(currentPage + 1)}
+                disabled={currentPage >= totalPages}
+              >
+                다음
+              </PageButton>
+            </Pagination>
+
           </Pagination>
         </ModalContent>
       </ModalOverlay>
@@ -278,7 +372,7 @@ const MeetModal = ({ onClose }) => {
       {showMeetApply && selectedMeeting && (
         <MeetApply
           meeting={selectedMeeting}
-          onClose={() => setShowMeetApply(false)}
+          onClose={handleMeetApplyClose}
           isLoggedIn={isLoggedIn}
           userData={userData}
         />
