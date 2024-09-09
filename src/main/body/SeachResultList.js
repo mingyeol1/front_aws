@@ -2,9 +2,9 @@ import styled, { keyframes } from "styled-components";
 import { useCallback, useEffect, useState } from "react";
 import { MainBody } from '../Main';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import MovieModal from "../../modal/MovieModal";
 import axios from "axios";
 import { debounce } from 'lodash';
+import MovieModal from "../../modal/MovieModal";
 
 // 스타일 정의 (변경 없음)
 const SearchResultListAreaStyle = styled.div`
@@ -316,7 +316,7 @@ function SearchResultList({ clearSearchValue }) {
         </LoadingEndMessage>
       </SearchResultListAreaStyle>
       {selectedMovie && (
-        <MovieModal 
+        <MovieModal
           movie={selectedMovie} 
           onClose={() => setSelectedMovie(null)}
           onGenreClick={handleGenreClick}
