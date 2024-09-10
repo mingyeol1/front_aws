@@ -220,8 +220,9 @@ const MeetModal = ({ onClose }) => {
   };
 
   const handleMeetingDeleted = () => {
+    setShowMeetApply(false);
+    setSelectedMeeting(null);
     fetchMeetings(); // 게시글 목록을 새로고침
-    handleCloseModal(); // Apply 모달을 닫음
   };
 
   const checkLoginStatus = async () => {
@@ -321,15 +322,6 @@ const MeetModal = ({ onClose }) => {
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={e => e.stopPropagation()}>
           <TopSection>
-            {/* <SearchBar>
-              <SearchInput 
-                type="text" 
-                placeholder="검색" 
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <FaSearch style={{ marginLeft: '10px', color: '#888' }} />
-            </SearchBar> */}
             <CloseButton onClick={onClose}><FaTimes /></CloseButton>
           </TopSection>
 
@@ -391,16 +383,17 @@ const MeetModal = ({ onClose }) => {
           show={showMeetCreate}
           onClose={handleMeetCreateClose}
           userData={userData}
+          authToken={cookies.accessToken}
         />
       )}
 
       {showMeetApply && selectedMeeting && (
         <MeetApply
-        meeting={selectedMeeting}
-        onClose={handleCloseModal}
-        isLoggedIn={isLoggedIn}
-        userData={userData}
-        onMeetingDeleted={handleMeetingDeleted}
+          meeting={selectedMeeting}
+          onClose={() => setShowMeetApply(false)}
+          isLoggedIn={isLoggedIn}
+          userData={userData}
+          onMeetingDeleted={handleMeetingDeleted}
         />
       )}
     </>

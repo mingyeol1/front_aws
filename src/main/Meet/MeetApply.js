@@ -208,11 +208,9 @@ const EditInput = styled.input`
   color: white;
 `;
 
-const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
+const MeetApply = ({ meeting, onClose, isLoggedIn, userData, onMeetingDeleted }) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  const [isAuthor, setIsAuthor] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
@@ -220,9 +218,10 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
   const [editingComment, setEditingComment] = useState(null);
   const [editContent, setEditContent] = useState('');
 
+  const isAuthor = userData && meeting && userData.mid === meeting.meetWriter;
+
   useEffect(() => {
     fetchComments();
-    checkIsAuthor();
 
     const handleEsc = (event) => {
       if (event.keyCode === 27) {
@@ -235,24 +234,6 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
       window.removeEventListener('keydown', handleEsc);
     };
   }, [currentPage, meeting.meetId, onClose]);
-
-  const checkIsAuthor = () => {
-    if (userData && meeting) {
-      setIsAuthor(userData.mnick === meeting.meetWriter);
-    }
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
-    });
-  };
 
   const fetchComments = async () => {
     try {
@@ -304,36 +285,21 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
     }
   };
 
-  const handleUpdate = () => {
-    setShowUpdateModal(true);
-  };
-
-  const handleUpdateComplete = async (updatedMeeting) => {
-    try {
-      await api.put(`/api/meet/${meeting.meetId}`, updatedMeeting);
-      setShowUpdateModal(false);
-      // Refresh the meeting details
-      const response = await api.get(`/api/meet/${meeting.meetId}`);
-      // Update the meeting state in the parent component or refresh the page
-      onClose();
-    } catch (error) {
-      console.error('Error updating meeting:', error);
-      setErrorMessage('모임 수정 중 오류가 발생했습니다.');
-    }
-  };
-
   const handleDelete = async () => {
+    if (!isAuthor) {
+      setErrorMessage('게시글 작성자만 삭제할 수 있습니다.');
+      return;
+    }
+
     if (window.confirm('정말로 이 모임을 삭제하시겠습니까?')) {
       try {
-        await api.delete(`/api/meet/${meeting.meetId}`);
-        setSuccessMessage('모임이 성공적으로 삭제되었습니다.');
-        setTimeout(() => {
-          onClose();
-          // You might want to add a callback to refresh the MeetModal
-        }, 2000);
+        await api.delete(`/api/meet/delete/${meeting.meetId}`);
+        alert('모임이 성공적으로 삭제되었습니다.');
+        onClose();
+        onMeetingDeleted(); // 부모 컴포넌트에 삭제 알림
       } catch (error) {
         console.error('Error deleting meeting:', error);
-        setErrorMessage('모임 삭제 중 오류가 발생했습니다.');
+        alert('모임 삭제 중 오류가 발생했습니다.');
       }
     }
   };
@@ -379,13 +345,13 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
             <div>
               <Title>{meeting.meetTitle}</Title>
               <InfoItem><InfoLabel>작성자:</InfoLabel> {meeting.meetWriter}</InfoItem>
-              <InfoItem><InfoLabel>모임 시간:</InfoLabel> {formatDate(meeting.meetTime)}</InfoItem>
+              <InfoItem><InfoLabel>모임 시간:</InfoLabel> {new Date(meeting.meetTime).toLocaleString()}</InfoItem>
               <InfoItem><InfoLabel>모집 인원:</InfoLabel> {meeting.personnel}명</InfoItem>
               <InfoItem><InfoLabel>모임 내용:</InfoLabel> {meeting.meetContent}</InfoItem>
             </div>
             {isAuthor && (
               <div>
-                <ActionButton delete onClick={handleDelete}>모집글 삭제</ActionButton>
+                <ActionButton onClick={handleDelete}>모집글 삭제</ActionButton>
               </div>
             )}
           </InfoSection>
@@ -453,19 +419,11 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData }) => {
                 다음
               </Button>
             </Pagination>
-        )}
-      </BottomSection>
-
-      {showUpdateModal && (
-        <MeetUpdate
-          meeting={meeting}
-          onClose={() => setShowUpdateModal(false)}
-          onUpdate={handleUpdateComplete}
-        />
-      )}
-    </ModalContent>
-  </ModalOverlay>
-);
+          )}
+        </BottomSection>
+      </ModalContent>
+    </ModalOverlay>
+  );
 };
 
 export default MeetApply;

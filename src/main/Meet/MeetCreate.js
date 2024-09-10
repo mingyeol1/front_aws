@@ -214,6 +214,7 @@ const MeetCreate = ({ show, onClose, editMode = false, meetNum, authToken, userD
   const handleSubmit = async () => {
     const data = {
       ...formData,
+      meetWriter: userData.mid,  // 현재 로그인한 사용자의 mid를 meetWriter로 설정
       fileNames: formData.fileNames.map(file => file.fileName) // 서버에 파일명만 전송
     };
 
