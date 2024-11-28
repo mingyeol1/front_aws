@@ -63,12 +63,16 @@ function SignUp() {
       console.log(response.data);
       // 회원가입 성공 처리
       alert("가입에 성공하셨습니다.");
+      //로그인페이지로 이동.
       navigate('/login');
     } catch (error) {
+      //중복값 확인
       if (error.response) {
         console.log(error.response)
+        //차후에 닉네임 및 아이디를 분리 하겠음.
         alert("이미 존재하는 아이디 및 닉네임입니다.");
       } else {
+        // 서버에러.
         console.error('회원가입 실패:', error);
         alert("회원가입에 실패하셨습니다.");
       }

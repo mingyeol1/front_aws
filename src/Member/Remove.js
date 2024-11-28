@@ -21,7 +21,7 @@ function Remove() {
     e.preventDefault();
     api.post("/api/auth/remove", { mpw })
       .then(response => {
-        alert(response.data);
+        // alert(response.data);
         removeCookie('accessToken');  //삭제시 엑세스토큰 삭제
         removeCookie('refreshToken'); // 삭제시 리프레쉬토큰 삭제
         navigate("/");  // 삭제 후 메인 페이지로 이동

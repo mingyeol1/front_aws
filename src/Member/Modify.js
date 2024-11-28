@@ -27,10 +27,13 @@ export function Modify() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    //URL주소로 접근하려 할 때 로그인 쿠키값이 없으면 로그인페이지로 이동.
     if (!cookies.accessToken) {
       alert("권한이 없습니다.");
       navigate("/login");
     } else {
+      //엑세스 토큰이 있으면 
       setAuthToken(cookies.accessToken);
       
       // 서버에서 회원 정보를 가져옴
@@ -43,6 +46,7 @@ export function Modify() {
         setOriginalData({ mnick, memail });
       })
       .catch(error => {
+        //서버에러가 나면 정보를 못불러옴. 혹은 토큰값 만료.
         console.error(error);
         alert("유저 정보를 불러오는 데 실패했습니다.");
       });
@@ -110,6 +114,7 @@ export function Modify() {
       if (error.response) {
         alert(error.response.data);
       } else {
+        //서버오류
         console.error(error);
         alert("수정 중 오류가 발생했습니다.");
       }

@@ -10,12 +10,13 @@ function Login() {
     mpw: ''
   });
 
+  //쿠키값 설정.
   const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
 
 
 
-  //타이핑 할 때마다 loginData상태 업데이트.....
+  //loginData상태 업데이트
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
@@ -23,6 +24,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      //서버에 login 요청.
       const response = await api.post('/api/auth/login', loginData);
 
 
@@ -33,17 +35,18 @@ function Login() {
       setCookie('refreshToken', refreshToken, { path: '/', sameSite: 'Lax' });
 
 
-
+      //성공시 로그인 성공여부와 메인페이지로 이동
       navigate('/');
       alert("로그인에 성공하셨습니다.");
     } catch (error) {
+      //로그인 실패알림
       console.error('로그인 실패:', error);
       alert("아이디 또는 비밀번호가 다릅니다.");
     }
   };
 
   const handleKakaoLogin = () => {
-    // 카카오 로그인 페이지로 리디렉션
+    // 카카오 로그인 페이지로 이동
     window.location.href = "https://dev.tft.p-e.kr/oauth2/authorization/kakao";
   };
 

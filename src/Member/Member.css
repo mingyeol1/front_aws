@@ -1,5 +1,7 @@
 input:focus {outline: none;}
 
+
+/* URL주소로 받아오는 로그인 백그라운드 배경 */
 .mainBackground {
   background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg');
   background-size: cover;
@@ -11,6 +13,8 @@ input:focus {outline: none;}
 
 }
 
+
+
 .main-container {
   display: flex;
   justify-content: center;
@@ -18,6 +22,8 @@ input:focus {outline: none;}
 
 }
 
+
+/* 검은색 네모 박스 */
 .main-form {
   background-color: rgba(0, 0, 0, 0.75);
   padding: 60px 100px 50px 60px;
@@ -25,6 +31,7 @@ input:focus {outline: none;}
   width: 330px;
 }
 
+/* 흰색 글자 */
 .main-form h2 {
   color: #fff;
   font-size: 28px;
@@ -32,6 +39,8 @@ input:focus {outline: none;}
   margin-bottom: 28px;
 }
 
+
+/* 인풋박스 */
 .main-form input {
   width: 100%;
   height: 23px;
@@ -44,10 +53,14 @@ input:focus {outline: none;}
   font-size: 16px;
 }
 
+
+/* 기본 들어가 있는 글자. */
 .main-form input::placeholder {
   color: #8c8c8c;
 }
 
+
+/* 빨간색 버튼 */
 .danger {
   width: 368px;
   height: 50px;
@@ -62,6 +75,8 @@ input:focus {outline: none;}
   transition: background-color 0.2s;
 }
 
+
+/* 빨간버튼 호버. */
 .danger:hover {
   background-color: rgb(150, 7, 15);
 }
@@ -73,6 +88,9 @@ input:focus {outline: none;}
   margin-bottom: 28px;
 }
 
+
+
+/* 수정페이지 이동 */
 .modify {
   width: 368px;
   height: 50px;
@@ -87,11 +105,13 @@ input:focus {outline: none;}
   transition: 0.2s;
 }
 
+
+/* 수정페이지 버튼 호버 */
 .modify:hover {
   background-color: rgb(12, 80, 27);
 }
 
-
+/* 카카오 이미지 */
 .kakao img {
   margin-top: 10px;
   width: 368px;
@@ -99,6 +119,8 @@ input:focus {outline: none;}
   cursor: pointer;
 }
 
+
+/* 회원가입 버튼 */
 .signUpBtn {
   width: 100%;
   margin-left: 300px;
