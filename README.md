@@ -10,7 +10,7 @@
 
 ## 영화 카테고리
 
-![카테고리]()
+![카테고리](https://github.com/mingyeol1/front_aws/blob/main/category.png)
 
 
 ## 영화 상세페이지
