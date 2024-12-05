@@ -49,11 +49,11 @@
 
 
 
-## 마이페이지
+## 회원정보수정1
 ![마이페이지2](https://github.com/mingyeol1/front_aws/blob/main/MyDetail.png)
 
 
-## 마이페이지3
+## 회정정보수정2
 ![마이페이지3](https://github.com/mingyeol1/front_aws/blob/main/MyDetail2.png)
 
 
