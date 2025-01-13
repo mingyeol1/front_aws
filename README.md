@@ -1,5 +1,22 @@
 # 더 파이팅 영화 사이트
 
+## 개발인원 4명
+
+### 팀장 김민결
+### 팀원 이영근
+### 팀원 이현관
+### 팀원 박성균
+
+### 개발기간 2024 - 08 - 14 ~ 2024 - 09 -09
+
+### 사용언어 : JavaScript, JAVA
+### 프레임워크 : Spring Boot
+### 라이브러리 : REACT, Spring Security
+### 데이터베이스 : My SQL
+### 배포 : AWS Elastic Beanstalk, CICD 파이프라인 연동
+
+
+
 <br>
 
 ## 메인페이지 
