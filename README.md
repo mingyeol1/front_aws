@@ -37,7 +37,7 @@
 
 ## 기술 스택
 
-- **프론트엔드**: React.js
+- **프론트엔드**: React.js , React.cookie , React.Router
 - **백엔드**: Spring Boot, Spring Data JPA
 - **데이터베이스**: MySQL
 - **배포**: AWS Elastic Beanstalk, CI/CD 파이프라인
