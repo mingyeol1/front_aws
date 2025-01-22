@@ -35,11 +35,14 @@
 ### 개발기간 2024 - 08 - 14 ~ 2024 - 09 -09
 <hr>
 
-### 사용언어 : JavaScript, JAVA
-### 프레임워크 : Spring Boot
-### 라이브러리 : REACT, Spring Security
-### 데이터베이스 : My SQL
-### 배포 : AWS Elastic Beanstalk, CICD 파이프라인 연동
+## 기술 스택
+
+- **프론트엔드**: React.js
+- **백엔드**: Spring Boot
+- **데이터베이스**: MySQL
+- **배포**: AWS Elastic Beanstalk, CI/CD 파이프라인
+- **인증 및 보안**: Spring Security, 카카오 OAuth
+
 
 
 
