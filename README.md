@@ -38,7 +38,7 @@
 ## 기술 스택
 
 - **프론트엔드**: React.js
-- **백엔드**: Spring Boot
+- **백엔드**: Spring Boot, Spring Data JPA
 - **데이터베이스**: MySQL
 - **배포**: AWS Elastic Beanstalk, CI/CD 파이프라인
 - **인증 및 보안**: Spring Security, 카카오 OAuth
