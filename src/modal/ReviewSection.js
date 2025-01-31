@@ -123,9 +123,10 @@ const ReviewSection = ({
     return currentUser && currentUser.mnick === reviewUser;
   };
 
-  console.log('Rendering reviews:', reviews);
-  console.log("allStars" + allStars);
-  console.log("total" + total);
+  // 체크용 로그 제거.
+  // console.log('Rendering reviews:', reviews);
+  // console.log("allStars" + allStars);
+  // console.log("total" + total);
 
   return (
     <StyledReviewSection>

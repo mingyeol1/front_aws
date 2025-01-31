@@ -65,7 +65,7 @@ const useReviews = (movie_id, movie_title) => {
         }
       });
       
-      console.log('Response:', response.data);
+      // console.log('Response:', response.data);
       const newReviews = (response.data.dtoList || []).map(review => ({
         review_id: review.review_id,
         text: review.review_text,
