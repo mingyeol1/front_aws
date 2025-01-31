@@ -218,7 +218,9 @@ const MeetApply = ({ meeting, onClose, isLoggedIn, userData, onMeetingDeleted })
   const [editingComment, setEditingComment] = useState(null);
   const [editContent, setEditContent] = useState('');
 
-  const isAuthor = userData && meeting && userData.mid === meeting.meetWriter;
+  const isAuthor = userData && meeting 
+
+  console.log(userData.mnick)
 
   useEffect(() => {
     fetchComments();
