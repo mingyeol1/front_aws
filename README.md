@@ -51,8 +51,8 @@
 ## 메인페이지 
 
 ![메인](https://github.com/mingyeol1/front_aws/blob/main/Mainpage.png)
-사용자가 사이트 방문시 가장 먼저 보게되는 화면입니다.
 ![메인2](https://github.com/mingyeol1/front_aws/blob/main/mp/main.gif)
+사용자가 사이트 방문시 가장 먼저 보게되는 화면입니다.
 
 <br>
 <br>
@@ -102,20 +102,21 @@
 
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
+
 
 ![댓글1](https://github.com/mingyeol1/front_aws/blob/main/mp/review2.gif)
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 ## 로그인 페이지
 ![로그인 페이지](https://github.com/mingyeol1/front_aws/blob/main/Login.png)
-
-<br>
-<br>
-
 ![로그인 페이지2](https://github.com/mingyeol1/front_aws/blob/main/mp/login.gif)
 사용자가 로그인 할 수 있는 로그인 화면입니다.
 
@@ -134,10 +135,6 @@
 
 ## 회원가입페이지
 ![회원가입 페이지](https://github.com/mingyeol1/front_aws/blob/main/SignUp%20(2).png)
-
-<br>
-<br>
-
 ![회원가입 페이지2](https://github.com/mingyeol1/front_aws/blob/main/mp/signup.gif)
 사용자가 회원가입을 할 수 있는 화면입니다.
 
@@ -153,10 +150,7 @@
 ## 모임게시판
 ![모임게시판](https://github.com/mingyeol1/front_aws/blob/main/Meet.png)
 
-<br>
-<br>
 
-![모임게이시판](https://github.com/mingyeol1/front_aws/blob/main/mp/meet.gif)
 
 사용자끼리 모임을 하여 영화를 같이 볼 수 있는 게시판입니다.
 
@@ -171,14 +165,12 @@
 ![모임게시글보기](https://github.com/mingyeol1/front_aws/blob/main/Meet2.png)
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 
 ## 모임게시판 상세보기
 ![모임게시글상세보기](https://github.com/mingyeol1/front_aws/blob/main/MeetDetail.png)
+<br>
+![모임게이시판](https://github.com/mingyeol1/front_aws/blob/main/mp/meet.gif)
 
 <br>
 <br>
