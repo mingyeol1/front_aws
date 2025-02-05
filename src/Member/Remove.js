@@ -36,7 +36,7 @@ function Remove() {
     <div className="mainBackground">
       <div className="main-container">
         <form className="main-form" onSubmit={handleSubmit}>
-          <h1>정말 탈퇴 하시겠습니까?</h1>
+          <h2>정말 탈퇴 하시겠습니까?</h2>
           <input 
             placeholder="비밀번호 입력" 
             type="password" 
