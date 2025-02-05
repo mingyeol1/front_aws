@@ -52,7 +52,7 @@
 
 ![메인](https://github.com/mingyeol1/front_aws/blob/main/Mainpage.png)
 사용자가 사이트 방문시 가장 먼저 보게되는 화면입니다.
-
+![메인2](https://github.com/mingyeol1/front_aws/blob/main/mp/main.gif)
 
 <br>
 <br>
