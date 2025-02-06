@@ -24,26 +24,43 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      //서버에 login 요청.
+      // 서버에 로그인 요청
       const response = await api.post('/api/auth/login', loginData);
-
-
+  
       const { accessToken, refreshToken } = response.data;
-
+  
+      // ✅ JWT 토큰이 올바르게 존재하는지 확인
+      if (!accessToken || !refreshToken) {
+        throw new Error("서버로부터 토큰을 받지 못했습니다.");
+      }
+  
       // 쿠키에 저장
       setCookie('accessToken', accessToken, { path: '/', sameSite: 'Lax' });
       setCookie('refreshToken', refreshToken, { path: '/', sameSite: 'Lax' });
-
-
-      //성공시 로그인 성공여부와 메인페이지로 이동
+  
+      // ✅ 인증 헤더 설정
+      setAuthToken(accessToken);
+  
+      // 성공 시 메인 페이지로 이동
       navigate('/');
       alert("로그인에 성공하셨습니다.");
     } catch (error) {
-      //로그인 실패알림
       console.error('로그인 실패:', error);
-      alert("아이디 또는 비밀번호가 다릅니다.");
+  
+      // ✅ 401 상태 코드 처리
+      if (error.response && error.response.status === 401) {
+        alert(error.response.data.message || "아이디 또는 비밀번호가 다릅니다.");
+      } else {
+        alert("로그인 중 오류가 발생했습니다.");
+      }
+  
+      // 🚨 실패 시 토큰 삭제
+      setAuthToken(null);
+      setCookie('accessToken', '', { path: '/' });
+      setCookie('refreshToken', '', { path: '/' });
     }
   };
+  
 
   const handleKakaoLogin = () => {
     // 카카오 로그인 페이지로 이동
