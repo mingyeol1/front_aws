@@ -44,6 +44,24 @@
 - **인증 및 보안**: Spring Security, 카카오 OAuth
 
 
+## 시간이 날 때 마다 조금씩 수정중
+
+<br>
+<br>
+<br>
+ 
+### 수정 :  김민결
+
+front : 모임게시판 상세 보기 할 때 닉네임이 아닌 id값 나오던거 수정.
+
+back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막음. 여기서 login service부분 로직이 건너 띄어진다는걸 발견. config 를 수정해서 service 로직을 받아오나 클라이언트에 아무 값을 넣어도 로그인이 되는 상황이 발생 service 에 RuntimeException대신 ResponseStatusException 을 사용해여 401에러를 받을 수 있게하여 정상작동 확인.
+        
+<br>
+
+        게시글 및 모임게시글에 댓글이 있을 때 삭제가 안되는 상황 수정 OneToMany추가 후 orphanRemoval = true 부분 넣어줘서 해결했음.
+
+
+
 
 
 <br>
