@@ -44,10 +44,116 @@
 - **인증 및 보안**: Spring Security, 카카오 OAuth
 
 
-## 시간이 날 때 마다 조금씩 수정중
+<br>
+<br>
+<br>
 
-<br>
-<br>
+## 파일구조
+
+src
+ └── main
+     └── java
+         └── com.project.react_tft
+             ├── config                # 프로젝트 설정 관련 클래스
+             │   ├── AwsConfig
+             │   ├── CustomSecurityConfig
+             │   ├── PasswordEncoderConfig
+             │   ├── RootConfig
+             │   └── SwaggerConfig
+             │
+             ├── controller             # API 컨트롤러
+             │   ├── advice
+             │   │   └── CustomRestAdvice
+             │   ├── BoardController
+             │   ├── HomeController
+             │   ├── MeetBoardController
+             │   ├── MeetBoardImageController
+             │   ├── MeetReplyController
+             │   ├── MemberController
+             │   ├── MovieController
+             │   ├── ReplyController
+             │   ├── ReviewController
+             │   ├── SampleController
+             │   └── UnloginController
+             │
+             ├── domain                 # JPA 엔티티 클래스
+             │   ├── BaseEntity
+             │   ├── Board
+             │   ├── MeetBoard
+             │   ├── MeetBoardImage
+             │   ├── MeetReply
+             │   ├── Member
+             │   ├── MemberRole
+             │   ├── Movie
+             │   ├── Reply
+             │   └── Review
+             │
+             ├── dto                     # DTO (Data Transfer Object)
+             │   ├── image
+             │   │   ├── ImageFileDTO
+             │   │   └── ImageResultDTO
+             │   ├── BoardDTO
+             │   ├── BoardListReplyCountDTO
+             │   ├── MeetBoardDTO
+             │   ├── MeetBoardImageDTO
+             │   ├── MeetBoardListAllDTO
+             │   ├── MeetBoardListReplyCountDTO
+             │   ├── MeetReplyDTO
+             │   ├── MemberDTO
+             │   ├── MemberSecurityDTO
+             │   ├── MovieDTO
+             │   ├── PageRequestDTO
+             │   ├── PageResponseDTO
+             │   ├── ReplyDTO
+             │   ├── ReviewDTO
+             │   ├── ReviewPageRequestDTO
+             │   └── ReviewPageResponseDTO
+             │
+             ├── Repository               # JPA Repository
+             │   ├── BoardRepository
+             │   ├── MeetBoardRepository
+             │   ├── MeetReplyRepository
+             │   ├── MemberRepository
+             │   ├── MovieRepository
+             │   ├── ReplyRepository
+             │   └── ReviewRepository
+             │
+             ├── security                 # 보안 및 인증 관련
+             │   ├── filter
+             │   │   ├── exception
+             │   │   ├── handler
+             │   │   │   ├── LoginFilter
+             │   │   │   ├── RefreshTokenFilter
+             │   │   │   ├── TokenCheckFilter
+             │   │   ├── CustomOauth2UserService
+             │   │   └── CustomUserDetailsService
+             │   ├── handler
+             │   │   ├── CustomSocialLoginSuccessHandler
+             │
+             ├── service                   # 비즈니스 로직
+             │   ├── BoardService
+             │   ├── BoardServiceImpl
+             │   ├── MeetBoardService
+             │   ├── MeetBoardServiceImpl
+             │   ├── MeetReplyService
+             │   ├── MeetReplyServiceImpl
+             │   ├── MemberService
+             │   ├── MemberServiceImpl
+             │   ├── MovieService
+             │   ├── MovieServiceImpl
+             │   ├── ReplyService
+             │   ├── ReplyServiceImpl
+             │   ├── ReviewService
+             │   └── ReviewServiceImpl
+             │
+             ├── util                      # 유틸리티 클래스
+             │   └── JWTUtil
+             │
+             └── ReactTftApplication       # 메인 애플리케이션 클래스
+
+
+## 조금씩 수정중
+
 <br>
  
 ### 수정 :  김민결
