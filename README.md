@@ -61,7 +61,7 @@ src
              │   ├── RootConfig
              │   └── SwaggerConfig
              │
-             ├── controller             # API 컨트롤러
+             ├── controller             # API
              │   ├── advice
              │   │   └── CustomRestAdvice
              │   ├── BoardController
@@ -76,7 +76,7 @@ src
              │   ├── SampleController
              │   └── UnloginController
              │
-             ├── domain                 # JPA 엔티티 클래스
+             ├── domain                 # 엔티티 클래스
              │   ├── BaseEntity
              │   ├── Board
              │   ├── MeetBoard
@@ -130,7 +130,7 @@ src
              │   ├── handler
              │   │   ├── CustomSocialLoginSuccessHandler
              │
-             ├── service                   # 비즈니스 로직
+             ├── service                   # serveice
              │   ├── BoardService
              │   ├── BoardServiceImpl
              │   ├── MeetBoardService
@@ -146,8 +146,8 @@ src
              │   ├── ReviewService
              │   └── ReviewServiceImpl
              │
-             ├── util                      # 유틸리티 클래스
-             │   └── JWTUtil
+             ├── util                      
+             │   └── JWTUtil               # JWT Util
              │
              └── ReactTftApplication       # 메인 애플리케이션 클래스
 ```
