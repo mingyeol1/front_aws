@@ -49,7 +49,7 @@
 <br>
 
 ## 파일구조
-
+```
 src
  └── main
      └── java
@@ -150,7 +150,7 @@ src
              │   └── JWTUtil
              │
              └── ReactTftApplication       # 메인 애플리케이션 클래스
-
+```
 
 ## 조금씩 수정중
 
