@@ -44,6 +44,130 @@
 - **인증 및 보안**: Spring Security, 카카오 OAuth
 
 
+<br>
+<br>
+<br>
+
+## 파일구조
+```
+src
+ └── main
+     └── java
+         └── com.project.react_tft
+             ├── config                # 프로젝트 설정 관련 클래스
+             │   ├── AwsConfig
+             │   ├── CustomSecurityConfig
+             │   ├── PasswordEncoderConfig
+             │   ├── RootConfig
+             │   └── SwaggerConfig
+             │
+             ├── controller             # API
+             │   ├── advice
+             │   │   └── CustomRestAdvice
+             │   ├── BoardController
+             │   ├── HomeController
+             │   ├── MeetBoardController
+             │   ├── MeetBoardImageController
+             │   ├── MeetReplyController
+             │   ├── MemberController
+             │   ├── MovieController
+             │   ├── ReplyController
+             │   ├── ReviewController
+             │   ├── SampleController
+             │   └── UnloginController
+             │
+             ├── domain                 # 엔티티 클래스
+             │   ├── BaseEntity
+             │   ├── Board
+             │   ├── MeetBoard
+             │   ├── MeetBoardImage
+             │   ├── MeetReply
+             │   ├── Member
+             │   ├── MemberRole
+             │   ├── Movie
+             │   ├── Reply
+             │   └── Review
+             │
+             ├── dto                     # DTO (Data Transfer Object)
+             │   ├── image
+             │   │   ├── ImageFileDTO
+             │   │   └── ImageResultDTO
+             │   ├── BoardDTO
+             │   ├── BoardListReplyCountDTO
+             │   ├── MeetBoardDTO
+             │   ├── MeetBoardImageDTO
+             │   ├── MeetBoardListAllDTO
+             │   ├── MeetBoardListReplyCountDTO
+             │   ├── MeetReplyDTO
+             │   ├── MemberDTO
+             │   ├── MemberSecurityDTO
+             │   ├── MovieDTO
+             │   ├── PageRequestDTO
+             │   ├── PageResponseDTO
+             │   ├── ReplyDTO
+             │   ├── ReviewDTO
+             │   ├── ReviewPageRequestDTO
+             │   └── ReviewPageResponseDTO
+             │
+             ├── Repository               # JPA Repository
+             │   ├── BoardRepository
+             │   ├── MeetBoardRepository
+             │   ├── MeetReplyRepository
+             │   ├── MemberRepository
+             │   ├── MovieRepository
+             │   ├── ReplyRepository
+             │   └── ReviewRepository
+             │
+             ├── security                 # 보안 및 인증 관련
+             │   ├── filter
+             │   │   ├── exception
+             │   │   ├── handler
+             │   │   │   ├── LoginFilter
+             │   │   │   ├── RefreshTokenFilter
+             │   │   │   ├── TokenCheckFilter
+             │   │   ├── CustomOauth2UserService
+             │   │   └── CustomUserDetailsService
+             │   ├── handler
+             │   │   ├── CustomSocialLoginSuccessHandler
+             │
+             ├── service                   # serveice
+             │   ├── BoardService
+             │   ├── BoardServiceImpl
+             │   ├── MeetBoardService
+             │   ├── MeetBoardServiceImpl
+             │   ├── MeetReplyService
+             │   ├── MeetReplyServiceImpl
+             │   ├── MemberService
+             │   ├── MemberServiceImpl
+             │   ├── MovieService
+             │   ├── MovieServiceImpl
+             │   ├── ReplyService
+             │   ├── ReplyServiceImpl
+             │   ├── ReviewService
+             │   └── ReviewServiceImpl
+             │
+             ├── util                      
+             │   └── JWTUtil               # JWT Util
+             │
+             └── ReactTftApplication       # 메인 애플리케이션 클래스
+```
+
+## 조금씩 수정중
+
+<br>
+ 
+### 수정 :  김민결
+
+front : 모임게시판 상세 보기 할 때 닉네임이 아닌 id값 나오던거 수정.
+
+back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막음. 여기서 login service부분 로직이 건너 띄어진다는걸 발견. config 를 수정해서 service 로직을 받아오나 클라이언트에 아무 값을 넣어도 로그인이 되는 상황이 발생 service 에 RuntimeException대신 ResponseStatusException 을 사용해여 401에러를 받을 수 있게하여 정상작동 확인.
+        
+<br>
+
+게시글 및 모임게시글에 댓글이 있을 때 삭제가 안되는 상황 수정 OneToMany추가 후 orphanRemoval = true 부분 넣어줘서 해결했음.
+
+
+
 
 
 <br>
