@@ -166,6 +166,10 @@ back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막�
 
 게시글 및 모임게시글에 댓글이 있을 때 삭제가 안되는 상황 수정 OneToMany추가 후 orphanRemoval = true 부분 넣어줘서 해결했음.
 
+<br>
+
+board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의 했음.
+
 
 
 
