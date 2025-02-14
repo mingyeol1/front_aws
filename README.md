@@ -168,7 +168,7 @@ back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막�
 
 <br>
 
-board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의 했음.
+board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 DB에서 더욱 쉽게 작성자를 찾을 수 있게 했음
 
 
 
