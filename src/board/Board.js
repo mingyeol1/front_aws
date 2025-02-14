@@ -31,6 +31,8 @@ function Board() {
       const response = await api.get(`/board/list?page=${page}&size=10`, {});
       const data = response.data;      console.log("response: ", response.data);      console.log("data: ", data);
       if (response.status === 200 && Array.isArray(data.dtoList)) {
+        console.log("데이타를 잘 불러오나? : ",data.dtoList);
+        console.log("데이타를 잘 불러오나? : ",data);
         setBoardData(data);
       } else {
         console.error("Expected an array but got:", data);
@@ -79,7 +81,7 @@ function Board() {
                 <tr key={item.bno}>
                     <td>{item.bno}</td>
                     <td><Link to={`/boardread/${item.bno}`}>{item.title}</Link></td>
-                    <td>{item.writer}</td>
+                    <td>{item.mnick}</td>
                     <td>{new Date(item.regDate).toLocaleDateString()}</td>
                 </tr>
               ))}

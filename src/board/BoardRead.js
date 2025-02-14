@@ -143,7 +143,8 @@ function BoardRead() {
         if (!isLoggedIn()) {
           e.preventDefault(); // 링크 이동 방지
           alert("로그인 해주세요");
-        }else if (memberData !== dtoList.writer) {
+        }else if (memberData !== dtoList.mnick) {
+            console.log("멤버 데이타 : " ,memberData)
             e.preventDefault();
             alert("작성자가 아닙니다.");
         }
@@ -167,7 +168,7 @@ function BoardRead() {
                         <p>{dtoList.content}</p>
                     </div>
                     <div className="board-info">
-                            <span className="author">작성자 : {dtoList.writer}</span>
+                            <span className="author">작성자 : {dtoList.mnick}</span>
                             <span className="date">작성날짜 : {new Date(dtoList.regDate).toLocaleDateString()}</span>
                     </div>
                 </div>

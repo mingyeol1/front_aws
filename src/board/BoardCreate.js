@@ -10,7 +10,7 @@ function BoardCreate() {
   const [createBoard, setCreateBoard] = useState({
     title: "",
     content: "",
-    writer: ""
+    mid: ""
   });
    const navigate = useNavigate(); 
 
@@ -20,7 +20,7 @@ function BoardCreate() {
 
   const handleCreateBoard = async (e) => {
     e.preventDefault();
-    if (!createBoard.title || !createBoard.content || !createBoard.writer) {
+    if (!createBoard.title || !createBoard.content || !createBoard.mid) {
       alert("제목, 내용, 작성자를 입력해주세요.");
       return;
     }
@@ -39,9 +39,9 @@ function BoardCreate() {
     setAuthToken(cookies.accessToken);
     api.get("/api/auth/modify")
       .then(response => {
-        const { mnick } = response.data;
-        setMemberData(mnick);
-        setCreateBoard({ ...createBoard, writer: mnick });
+        const { mid } = response.data;
+        setMemberData(mid);
+        setCreateBoard({ ...createBoard, mid: mid });
       })
       .catch(error => console.error(error));
   }, []);
