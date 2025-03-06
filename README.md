@@ -1,5 +1,5 @@
 # TFT 영화 사이트
-
+back 단 https://github.com/mingyeol1/aws-back
 <br>
 <br>
 <br>
@@ -44,10 +44,116 @@
 - **인증 및 보안**: Spring Security, 카카오 OAuth
 
 
-## 시간이 날 때 마다 조금씩 수정중
+<br>
+<br>
+<br>
 
-<br>
-<br>
+## 파일구조 - Back
+```
+src
+ └── main
+     └── java
+         └── com.project.react_tft
+             ├── config                # 프로젝트 설정 관련 클래스
+             │   ├── AwsConfig
+             │   ├── CustomSecurityConfig
+             │   ├── PasswordEncoderConfig
+             │   ├── RootConfig
+             │   └── SwaggerConfig
+             │
+             ├── controller             # API
+             │   ├── advice
+             │   │   └── CustomRestAdvice
+             │   ├── BoardController
+             │   ├── HomeController
+             │   ├── MeetBoardController
+             │   ├── MeetBoardImageController
+             │   ├── MeetReplyController
+             │   ├── MemberController
+             │   ├── MovieController
+             │   ├── ReplyController
+             │   ├── ReviewController
+             │   ├── SampleController
+             │   └── UnloginController
+             │
+             ├── domain                 # 엔티티 클래스
+             │   ├── BaseEntity
+             │   ├── Board
+             │   ├── MeetBoard
+             │   ├── MeetBoardImage
+             │   ├── MeetReply
+             │   ├── Member
+             │   ├── MemberRole
+             │   ├── Movie
+             │   ├── Reply
+             │   └── Review
+             │
+             ├── dto                     # DTO (Data Transfer Object)
+             │   ├── image
+             │   │   ├── ImageFileDTO
+             │   │   └── ImageResultDTO
+             │   ├── BoardDTO
+             │   ├── BoardListReplyCountDTO
+             │   ├── MeetBoardDTO
+             │   ├── MeetBoardImageDTO
+             │   ├── MeetBoardListAllDTO
+             │   ├── MeetBoardListReplyCountDTO
+             │   ├── MeetReplyDTO
+             │   ├── MemberDTO
+             │   ├── MemberSecurityDTO
+             │   ├── MovieDTO
+             │   ├── PageRequestDTO
+             │   ├── PageResponseDTO
+             │   ├── ReplyDTO
+             │   ├── ReviewDTO
+             │   ├── ReviewPageRequestDTO
+             │   └── ReviewPageResponseDTO
+             │
+             ├── Repository               # JPA Repository
+             │   ├── BoardRepository
+             │   ├── MeetBoardRepository
+             │   ├── MeetReplyRepository
+             │   ├── MemberRepository
+             │   ├── MovieRepository
+             │   ├── ReplyRepository
+             │   └── ReviewRepository
+             │
+             ├── security                 # 보안 및 인증 관련
+             │   ├── filter
+             │   │   ├── exception
+             │   │   ├── handler
+             │   │   │   ├── LoginFilter
+             │   │   │   ├── RefreshTokenFilter
+             │   │   │   ├── TokenCheckFilter
+             │   │   ├── CustomOauth2UserService
+             │   │   └── CustomUserDetailsService
+             │   ├── handler
+             │   │   ├── CustomSocialLoginSuccessHandler
+             │
+             ├── service                   # serveice
+             │   ├── BoardService
+             │   ├── BoardServiceImpl
+             │   ├── MeetBoardService
+             │   ├── MeetBoardServiceImpl
+             │   ├── MeetReplyService
+             │   ├── MeetReplyServiceImpl
+             │   ├── MemberService
+             │   ├── MemberServiceImpl
+             │   ├── MovieService
+             │   ├── MovieServiceImpl
+             │   ├── ReplyService
+             │   ├── ReplyServiceImpl
+             │   ├── ReviewService
+             │   └── ReviewServiceImpl
+             │
+             ├── util                      
+             │   └── JWTUtil               # JWT Util
+             │
+             └── ReactTftApplication       # 메인 애플리케이션 클래스
+```
+
+## 조금씩 수정중
+
 <br>
  
 ### 수정 :  김민결
@@ -58,7 +164,11 @@ back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막�
         
 <br>
 
-        게시글 및 모임게시글에 댓글이 있을 때 삭제가 안되는 상황 수정 OneToMany추가 후 orphanRemoval = true 부분 넣어줘서 해결했음.
+게시글 및 모임게시글에 댓글이 있을 때 삭제가 안되는 상황 수정 OneToMany추가 후 orphanRemoval = true 부분 넣어줘서 해결했음.
+
+<br>
+
+board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 DB에서 더욱 쉽게 작성자를 찾을 수 있게 했음
 
 
 
