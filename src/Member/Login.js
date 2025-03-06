@@ -47,11 +47,21 @@ function Login() {
     } catch (error) {
       console.error('로그인 실패:', error);
   
-      // ✅ 401 상태 코드 처리
-      if (error.response && error.response.status === 401) {
-        alert(error.response.data.message || "아이디 또는 비밀번호가 다릅니다.");
+      // ✅ 서버 응답이 있는 경우
+      if (error.response) {
+        const errorMessage = error.response.data.message || "로그인 중 오류가 발생했습니다.";
+  
+        // 🚨 특정 에러 메시지 처리
+        if (errorMessage.includes("이미 삭제된 아이디")) {
+          alert("삭제된 아이디입니다.");
+        } else if (error.response.status === 401) {
+          alert("아이디 또는 비밀번호가 다릅니다.");
+        } else {
+          alert(errorMessage);
+        }
       } else {
-        alert("로그인 중 오류가 발생했습니다.");
+        // 서버 응답이 없는 경우
+        alert("서버와 연결할 수 없습니다.");
       }
   
       // 🚨 실패 시 토큰 삭제

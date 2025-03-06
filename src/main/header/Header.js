@@ -100,9 +100,12 @@ function Header({ toggleSidebar }) {
 
   const handleLogout = () => {
     try {
-      // 쿠키 삭제 (도메인과 경로를 명시적으로 지정)
-      removeCookie('accessToken', { path: '/', domain: '.tft.p-e.kr' });
-      removeCookie('refreshToken', { path: '/', domain: '.tft.p-e.kr' });
+      // // 쿠키 삭제 (도메인과 경로를 명시적으로 지정)
+      // removeCookie('accessToken', { path: '/', domain: '.tft.p-e.kr' });
+      // removeCookie('refreshToken', { path: '/', domain: '.tft.p-e.kr' });
+
+      removeCookie('accessToken', { path: '/', domain: '.3000' });
+      removeCookie('refreshToken', { path: '/', domain: '.3000' });
       
 
       // 추가적인 쿠키 삭제 시도 (다른 도메인 설정으로)
