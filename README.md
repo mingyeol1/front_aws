@@ -78,7 +78,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 ![메인](https://github.com/mingyeol1/front_aws/blob/main/Mainpage.png)
 ![메인2](https://github.com/mingyeol1/front_aws/blob/main/mp/main.gif)
 <br>
-사용자가 사이트 방문시 가장 먼저 보게되는 화면입니다.
+
 
 <br>
 <br>
@@ -93,7 +93,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 ![카테고리](https://github.com/mingyeol1/front_aws/blob/main/category.png)
 ![카테고리2](https://github.com/mingyeol1/front_aws/blob/main/mp/category.gif)
 <br>
-좌측 상단에 토글버튼을 누르면 카테고리 창이 나옵니다.
+
 
 
 <br>
@@ -147,9 +147,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 ![로그인 페이지](https://github.com/mingyeol1/front_aws/blob/main/Login.png)
 ![로그인 페이지2](https://github.com/mingyeol1/front_aws/blob/main/mp/login.gif)
 <br>
-사용자가 로그인 할 수 있는 로그인 화면입니다.
 
-카카오auth를 해서  카카오 로그인으로 가입이 가능합니다.
 
 
 
@@ -166,7 +164,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 ![회원가입 페이지](https://github.com/mingyeol1/front_aws/blob/main/SignUp%20(2).png)
 ![회원가입 페이지2](https://github.com/mingyeol1/front_aws/blob/main/mp/signup.gif)
 <br>
-사용자가 회원가입을 할 수 있는 화면입니다.
+
 
 
 <br>
@@ -217,7 +215,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 
 ![마이페이지4](https://github.com/mingyeol1/front_aws/blob/main/mp/modify.gif)
 <br>
-사용자정보를 수정할 수 있는 페이지입니다. 탈퇴 및 정보변경을 할 수 있습니다.
+
 
 <br>
 <br>
