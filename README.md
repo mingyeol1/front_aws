@@ -70,7 +70,7 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 <br> 
 
 로그인을 해도 권한이 확인되지 않아서 찾아보니 service단에 로그인 엔드포인트가 있다는걸 확인 후 Filter로 동작하게 변경
-그래도 몇몇 기능이 제대로 동작하지 않아 TokenCheckFilter에서 엔드포인트 주소 설정 다시 했음.
+그래도 몇몇 기능이 제대로 동작하지 않아 TokenCheckFilter에서 Back단과 Front단 엔드포인트 주소 설정 다시 했음.
 
 
 
