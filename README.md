@@ -53,7 +53,7 @@ back 단 https://github.com/mingyeol1/aws-back
 
 <br>
  
-### 수정 :  김민결
+### 트러블슈팅 :  김민결
 
 front : 모임게시판 상세 보기 할 때 닉네임이 아닌 id값 나오던거 수정.
 
@@ -67,6 +67,10 @@ back : 아이디 삭제시 del 값이 true면 더이상 로그인 못하게 막�
 
 board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 DB에서 더욱 쉽게 작성자를 찾을 수 있게 했음
 
+<br> 
+
+로그인을 해도 권한이 확인되지 않아서 찾아보니 service단에 로그인 엔드포인트가 있다는걸 확인 후 Filter로 동작하게 변경
+그래도 몇몇 기능이 제대로 동작하지 않아 TokenCheckFilter에서 엔드포인트 주소 설정 다시 했음.
 
 
 
