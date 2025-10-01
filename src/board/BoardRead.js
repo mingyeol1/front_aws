@@ -32,7 +32,7 @@ function BoardRead() {
         };
         const fetchBoardData = async (bno) => {
             try {
-                const response = await api.get(`/board/read/${bno}`);
+                const response = await api.get(`/api/board/read/${bno}`);
                 const data = response.data;
                 if (response.status === 200) {
                     setDtoList(data);
@@ -51,7 +51,7 @@ function BoardRead() {
 
     const fetchComments = async (bno, page) => {
         try {
-            const response = await api.get(`/replies/list/${bno}?page=${page}&size=10`);
+            const response = await api.get(`/api/replies/list/${bno}?page=${page}&size=10`);
             const data = response.data;     console.log("Comments data Harry: ", data);
             if (response.status === 200 && data.dtoList) {
                 setComments(data.dtoList);
@@ -120,7 +120,7 @@ function BoardRead() {
             return;
         }
         try {
-            const response = await api.post('/replies/', {
+            const response = await api.post('/api/replies/', {
                 bno: paramBno,
                 replyText: newComment.replyText,
                 replyer: memberData          // 3-4. 로그인한 유저의 ID를 가져오기 위해 handleCommentSubmit 함수 수정

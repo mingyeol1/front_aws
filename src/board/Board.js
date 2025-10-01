@@ -28,7 +28,7 @@ function Board() {
 
   const fetchBoardData = async (page) => {
     try {
-      const response = await api.get(`/board/list?page=${page}&size=10`, {});
+      const response = await api.get(`/api/board/list?page=${page}&size=10`, {});
       const data = response.data;      console.log("response: ", response.data);      console.log("data: ", data);
       if (response.status === 200 && Array.isArray(data.dtoList)) {
         console.log("데이타를 잘 불러오나? : ",data.dtoList);
@@ -92,14 +92,14 @@ function Board() {
           <div className="pagination">
           {prev && (
               <NavLink 
-                to={`/board/${start - 1}`}
+                to={`/api/board/${start - 1}`}
                 className='button'>
                 이전
               </NavLink>
             )}
             {pageNumbers.map((pageNumber, index) => (
               <NavLink 
-                to={`/board/${pageNumber}`} 
+                to={`/api/board/${pageNumber}`} 
                 key={index} 
                 className={({ isActive }) => (isActive ? 'button active' : 'button')} >
                 {pageNumber}
@@ -107,7 +107,7 @@ function Board() {
             ))}
             {next && (
               <NavLink 
-                to={`/board/${end + 1}`}
+                to={`/api/board/${end + 1}`}
                 className='button'>
                 다음
               </NavLink>

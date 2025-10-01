@@ -25,7 +25,7 @@ function BoardCreate() {
       return;
     }
     try {
-      const response = await api.post('/board/register', createBoard);
+      const response = await api.post('/api/board/register', createBoard);
       console.log("게시글 작성 성공:", response);
 
       // 게시판 페이지로 리다이렉트하고 페이지 새로고침
