@@ -73,6 +73,11 @@ board 엔티티를 member엔티티와 ManyToOne으로 연관관계를 정의해 
 그래도 몇몇 기능이 제대로 동작하지 않아 TokenCheckFilter에서 Back단과 Front단 엔드포인트 주소 설정 다시 했음.
 Fornt단 변경하지 않은 엔드포인트 주소 수정
 
+<br>
+
+타 유저가 게시글 수정버튼을 볼 수 없게 수정
+검색창으로 boardupdate/1 같이 URL로 수정 직접 접근시 접근이 가능해지는 문제 수정해야함 
+
 
 
 
