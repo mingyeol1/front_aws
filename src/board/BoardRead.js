@@ -16,6 +16,8 @@ function BoardRead() {
     const [cookies] = useCookies(['accessToken']);      // 3-2. 로그인한 유저의 ID를 가져오기 위해 컴포넌트 내부에 다음 상태와 쿠키 사용 추가
     const [memberData, setMemberData] = useState('');   // 3-2. 로그인한 유저의 ID를 가져오기 위해 컴포넌트 내부에 다음 상태와 쿠키 사용 추가
 
+    
+
     useEffect(() => {   //useEffect 훅에 currentPage를 의존성 배열에 추가하여 페이지 변경 시 댓글을 다시 불러옵니다.
         setAuthToken(cookies.accessToken);      // 3-3. 로그인한 유저의 ID를 가져오기 위해 useEffect 훅 수정, 의존성 배열에 추가
     
@@ -156,11 +158,15 @@ function BoardRead() {
             <div className="board-read">
                 <div className="board-header">
                     <span className="board-category">자유게시판</span>
-                    <button className="board-button-update">
-                        <Link to={`/boardupdate/${dtoList.bno}`} onClick={handleUpdateClick}>   {/* 9-2. 로그인 보안 기능 추가 */}
+                    <div> {memberData !== dtoList.mnick ? null :
+                        <button className="board-button-update">
+                       
+                            <Link to={`/boardupdate/${dtoList.bno}`} onClick={handleUpdateClick}>   {/* 9-2. 로그인 보안 기능 추가 */}
                             게시글 수정
-                        </Link>
-                    </button>
+                            </Link>
+                    
+                        </button>}
+                    </div>
                 </div>
                 <div className="board-content">
                         <h1 className="board-title">{dtoList.title}</h1>                    
