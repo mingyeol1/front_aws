@@ -92,14 +92,14 @@ function Board() {
           <div className="pagination">
           {prev && (
               <NavLink 
-                to={`/api/board/${start - 1}`}
+                to={`/board/${start - 1}`}
                 className='button'>
                 이전
               </NavLink>
             )}
             {pageNumbers.map((pageNumber, index) => (
               <NavLink 
-                to={`/api/board/${pageNumber}`} 
+                to={`/board/${pageNumber}`} 
                 key={index} 
                 className={({ isActive }) => (isActive ? 'button active' : 'button')} >
                 {pageNumber}
@@ -107,7 +107,7 @@ function Board() {
             ))}
             {next && (
               <NavLink 
-                to={`/api/board/${end + 1}`}
+                to={`/board/${end + 1}`}
                 className='button'>
                 다음
               </NavLink>

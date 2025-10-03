@@ -131,7 +131,7 @@ export function Modify() {
       <div className="main-container">
         <form className="main-form" onSubmit={handleSubmit}>
           <h2>회원정보수정</h2>
-          <input type="hidden" name="mid" value={memberData.mid} />
+          <input type="hidden" name="mid" value={memberData.mid}  readOnly/>
           <input name="mnick" placeholder="닉네임" value={memberData.mnick} onChange={handleChange} />
           <input name="memail" placeholder="이메일" type="email" value={memberData.memail} onChange={handleChange} />
           <input name="mphone" placeholder="핸드폰번호" value={memberData.mphone} onChange={handleChange} />

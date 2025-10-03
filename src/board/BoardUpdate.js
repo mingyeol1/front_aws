@@ -14,7 +14,7 @@ function BoardUpdate() {
     useEffect(() => {
         const fetchBoardData = async (bno) => {
             try {
-                const response = await api.get(`/board/read/${bno}`);
+                const response = await api.get(`/api/board/read/${bno}`);
                 const data = response.data;
 
                 console.log("data: ", data);
@@ -41,7 +41,7 @@ function BoardUpdate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.put(`/board/${paramBno}`, dtoList);
+            await api.put(`/api/board/${paramBno}`, dtoList);
             navigate(`/boardread/${paramBno}`);
         } catch (error) {
             console.error("Error updating board data:", error.response || error);
@@ -50,7 +50,7 @@ function BoardUpdate() {
 
     const handleDelete = async () => {
         try {
-            await api.delete(`/board/${paramBno}`);
+            await api.delete(`/api/board/${paramBno}`);
             navigate(`/board`);
         } catch (error) {
             console.error("Error deleting board data:", error.response || error);

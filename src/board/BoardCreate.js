@@ -57,7 +57,7 @@ function BoardCreate() {
               <input name='title' value={createBoard.title} onChange={handleCreateBoardChange} placeholder="제목" />
               <textarea name="content" value={createBoard.content} onChange={handleCreateBoardChange} placeholder="내용" />
               <div className="board-create-info">
-                <span className="author">작성자 : {memberData}</span>
+                <span className="author">작성자 : {createBoard.mid}</span>
               </div>
           </div>
           <div className="board-create-footer">
